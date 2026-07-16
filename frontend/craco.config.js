@@ -27,6 +27,19 @@ module.exports = {
         );
       }
       webpackConfig.plugins = (webpackConfig.plugins || []).filter(p => p.constructor?.name !== "ESLintWebpackPlugin");
+      
+      // Limit Terser memory usage by disabling parallel execution
+      if (webpackConfig.optimization && webpackConfig.optimization.minimizer) {
+        const terser = webpackConfig.optimization.minimizer.find(
+          m => m.constructor && m.constructor.name === 'TerserPlugin'
+        );
+        if (terser) {
+          terser.options = {
+            ...terser.options,
+            parallel: false
+          };
+        }
+      }
       webpackConfig.resolve = webpackConfig.resolve || {};
       webpackConfig.resolve.plugins = (webpackConfig.resolve.plugins || []).filter(p => p.constructor?.name !== "ModuleScopePlugin");
       webpackConfig.resolve.fallback = {
