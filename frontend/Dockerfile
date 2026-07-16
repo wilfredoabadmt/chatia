@@ -33,10 +33,10 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL \
     REACT_APP_FEATURE_KANBAN_V2=$REACT_APP_FEATURE_KANBAN_V2 \
     REACT_APP_FEATURE_NOVA=$REACT_APP_FEATURE_NOVA \
     REACT_APP_FEATURE_COMPANY_SEARCH=$REACT_APP_FEATURE_COMPANY_SEARCH \
-    NODE_OPTIONS=--max-old-space-size=2048 \
+    NODE_OPTIONS=--max-old-space-size=1024 \
     GENERATE_SOURCEMAP=false
 
-RUN npx craco build || { echo "Build falhou, tentando com menos memória..."; NODE_OPTIONS=--max-old-space-size=1536 npx craco build; }
+RUN npx craco build || { echo "Build falhou, tentando com menos memória..."; NODE_OPTIONS=--max-old-space-size=768 npx craco build; }
 
 FROM nginx:alpine
 COPY --from=builder /app/build /usr/share/nginx/html
