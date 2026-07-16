@@ -1,0 +1,10 @@
+.git
+.gitignore
+.agents
+.claude
+README.md
+PLANO-CORRECOES.md
+PLAN-IMPLEMENTACION-CRM.md
+*/node_modules
+**/node_modules
+node_modules

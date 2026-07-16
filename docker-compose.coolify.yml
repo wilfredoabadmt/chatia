@@ -14,8 +14,9 @@
 services:
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.root
+      target: backend
     restart: unless-stopped
     # O entrypoint espera o banco, roda db-prepare + migrations (3 rodadas)
     # + seeds + seed_admin, e então inicia o servidor.
@@ -113,8 +114,9 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.root
+      target: frontend
       args:
         # ATENÇÃO: variáveis REACT_APP_* são de BUILD TIME (ficam no bundle).
         # Se mudar o domínio do backend, precisa REDEPLOY (rebuild) do frontend.

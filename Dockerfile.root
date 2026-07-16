@@ -1,0 +1,86 @@
+# syntax=docker/dockerfile:1
+
+# ==========================================
+# BACKEND BUILD STAGES
+# ==========================================
+FROM node:20-alpine AS backend-builder
+RUN apk add --no-cache git python3 make g++
+ENV NODE_OPTIONS="--max-old-space-size=1024"
+WORKDIR /app
+COPY backend/package*.json ./
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --no-audit --no-fund --loglevel error --legacy-peer-deps
+COPY backend/ .
+RUN npm run build
+
+# ==========================================
+# FRONTEND BUILD STAGES
+# ==========================================
+FROM node:20-alpine AS frontend-builder
+# Force BuildKit serialization by copying from backend-builder
+COPY --from=backend-builder /app/dist/server.js /tmp/backend-compiled.js
+RUN apk add --no-cache python3 make g++
+WORKDIR /app
+COPY frontend/package*.json ./
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
+COPY frontend/ .
+
+ARG REACT_APP_BACKEND_URL
+ARG REACT_APP_NAME_SYSTEM
+ARG REACT_APP_COMPANY_NAME
+ARG REACT_APP_NUMBER_SUPPORT
+ARG REACT_APP_HOURS_CLOSE_TICKETS_AUTO
+ARG REACT_APP_PRIMARY_COLOR
+ARG REACT_APP_PRIMARY_DARK
+ARG REACT_APP_FACEBOOK_APP_ID
+ARG REACT_APP_REQUIRE_BUSINESS_MANAGEMENT
+ARG REACT_APP_FEATURE_KANBAN_V2
+ARG REACT_APP_FEATURE_NOVA
+ARG REACT_APP_FEATURE_COMPANY_SEARCH
+
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL \
+    REACT_APP_NAME_SYSTEM=$REACT_APP_NAME_SYSTEM \
+    REACT_APP_COMPANY_NAME=$REACT_APP_COMPANY_NAME \
+    REACT_APP_NUMBER_SUPPORT=$REACT_APP_NUMBER_SUPPORT \
+    REACT_APP_HOURS_CLOSE_TICKETS_AUTO=$REACT_APP_HOURS_CLOSE_TICKETS_AUTO \
+    REACT_APP_PRIMARY_COLOR=$REACT_APP_PRIMARY_COLOR \
+    REACT_APP_PRIMARY_DARK=$REACT_APP_PRIMARY_DARK \
+    REACT_APP_FACEBOOK_APP_ID=$REACT_APP_FACEBOOK_APP_ID \
+    REACT_APP_REQUIRE_BUSINESS_MANAGEMENT=$REACT_APP_REQUIRE_BUSINESS_MANAGEMENT \
+    REACT_APP_FEATURE_KANBAN_V2=$REACT_APP_FEATURE_KANBAN_V2 \
+    REACT_APP_FEATURE_NOVA=$REACT_APP_FEATURE_NOVA \
+    REACT_APP_FEATURE_COMPANY_SEARCH=$REACT_APP_FEATURE_COMPANY_SEARCH \
+    NODE_OPTIONS=--max-old-space-size=1024 \
+    GENERATE_SOURCEMAP=false
+
+RUN npx craco build || { echo "Build falhou, tentando com menos memória..."; NODE_OPTIONS=--max-old-space-size=768 npx craco build; }
+
+# ==========================================
+# FINAL BACKEND IMAGE
+# ==========================================
+FROM node:20-alpine AS backend
+RUN apk add --no-cache ffmpeg chromium nss freetype harfbuzz ca-certificates ttf-freefont
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    NODE_ENV=production
+WORKDIR /app
+COPY --from=backend-builder /app/dist ./dist
+COPY --from=backend-builder /app/node_modules ./node_modules
+COPY --from=backend-builder /app/package*.json ./
+COPY --from=backend-builder /app/.sequelizerc ./
+COPY --from=backend-builder /app/database.config.js ./
+COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
+COPY backend/scripts/ /app/scripts/
+RUN chmod +x /app/docker-entrypoint.sh
+EXPOSE 3000
+CMD ["node", "dist/server.js"]
+
+# ==========================================
+# FINAL FRONTEND IMAGE
+# ==========================================
+FROM nginx:alpine AS frontend
+COPY --from=frontend-builder /app/build /usr/share/nginx/html
+COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
