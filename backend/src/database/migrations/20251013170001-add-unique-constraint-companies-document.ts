@@ -66,28 +66,17 @@ module.exports = {
 
     console.log('[Migration UP] Prerequisites validated: No duplicates found.');
 
-    // Step 2: Create partial UNIQUE index using CONCURRENTLY
-    // CONCURRENTLY prevents table locks, allowing INSERT/UPDATE during index creation
-    console.log('[Migration UP] Creating partial UNIQUE index (this may take 5-15s for large tables)...');
+    // Step 2: Create partial UNIQUE index
+    console.log('[Migration UP] Creating partial UNIQUE index...');
 
     try {
       await queryInterface.sequelize.query(`
-        CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS idx_companies_document_unique
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_companies_document_unique
         ON "Companies" (document)
         WHERE document IS NOT NULL;
       `);
     } catch (error: any) {
-      // If CONCURRENTLY fails inside transaction, PostgreSQL requires manual cleanup
-      if (error.message.includes('cannot run inside a transaction block')) {
-        console.log('[Migration UP] Retrying without CONCURRENTLY (fallback for transaction contexts)...');
-        await queryInterface.sequelize.query(`
-          CREATE UNIQUE INDEX IF NOT EXISTS idx_companies_document_unique
-          ON "Companies" (document)
-          WHERE document IS NOT NULL;
-        `);
-      } else {
-        throw error;
-      }
+      throw error;
     }
 
     console.log('[Migration UP] Index created: idx_companies_document_unique');
@@ -133,8 +122,8 @@ module.exports = {
         SELECT id, name, document FROM "Companies" WHERE document = '12345678900';
       `);
 
-      if (explainResult && explainResult[0] && explainResult[0][0] && explainResult[0][0]['QUERY PLAN']) {
-        const plan = explainResult[0][0]['QUERY PLAN'][0].Plan;
+      if (explainResult && explainResult[0] && explainResult[0]['QUERY PLAN']) {
+        const plan = explainResult[0]['QUERY PLAN'][0].Plan;
         const usesIndex = plan['Index Name'] === 'idx_companies_document_unique';
 
         if (usesIndex) {
