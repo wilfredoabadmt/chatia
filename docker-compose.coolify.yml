@@ -1,0 +1,186 @@
+# ============================================
+# ChatIA v4.5 - Docker Compose para Coolify
+# Colocar na RAIZ do repositório da aplicação
+# como: docker-compose.coolify.yml
+#
+# Diferenças vs docker-compose.yml da VPS:
+#  - Sem ports publicados (Traefik do Coolify roteia)
+#  - Sem container_name (Coolify nomeia)
+#  - SSL/domínios gerenciados pelo Coolify
+#  - Senhas geradas automaticamente (SERVICE_PASSWORD_*)
+#  - Migrations/seeds rodam no entrypoint do backend
+# ============================================
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # O entrypoint espera o banco, roda db-prepare + migrations (3 rodadas)
+    # + seeds + seed_admin, e então inicia o servidor.
+    command: ["sh", "/app/docker-entrypoint.sh"]
+    volumes:
+      - backend_public:/app/public
+      - backend_uploads:/app/uploads
+      # Archivos privados subidos vía Settings (config/privateFiles.ts → /app/private)
+      - backend_private:/app/private
+      # Certificado PIX Gerencianet/Efí (config/Gn.ts busca /app/certs/${GERENCIANET_PIX_CERT}.p12)
+      # ⚠️ El Dockerfile del backend NO copia certs/ a la imagen — sin este volumen
+      # (o un COPY en el Dockerfile) los pagos PIX fallan.
+      - backend_certs:/app/certs
+    environment:
+      # --- Domínio gerado/roteado pelo Coolify (porta interna 3000) ---
+      - SERVICE_FQDN_BACKEND_3000
+      # --- URLs (definir BACKEND_DOMAIN e FRONTEND_DOMAIN na UI do Coolify) ---
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+      - BACKEND_URL=https://${BACKEND_DOMAIN}
+      - FRONTEND_URL=https://${FRONTEND_DOMAIN}
+      # --- PostgreSQL ---
+      - DB_DIALECT=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=chatia
+      - DB_PASS=${SERVICE_PASSWORD_POSTGRES}
+      - DB_NAME=chatia
+      - DB_POOL_MAX=100
+      - DB_POOL_MIN=15
+      - DB_POOL_ACQUIRE=30000
+      - DB_POOL_IDLE=600000
+      # --- Redis (senha gerada pelo Coolify: alfanumérica, não precisa URL-encode) ---
+      - IO_REDIS_SERVER=redis
+      - IO_REDIS_PORT=6379
+      - IO_REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
+      - REDIS_DB=0
+      - REDIS_SECRET_KEY=MULTI100
+      - REDIS_OPT_LIMITER_MAX=1
+      - REDIS_OPT_LIMITER_DURATION=3000
+      - REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@redis:6379
+      - IO_REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@redis:6379
+      # --- Segredos (gerados automaticamente pelo Coolify) ---
+      - JWT_SECRET=${SERVICE_PASSWORD_64_JWTSECRET}
+      - JWT_REFRESH_SECRET=${SERVICE_PASSWORD_64_JWTREFRESH}
+      - SESSION_SECRET=${SERVICE_PASSWORD_64_SESSION}
+      # --- Admin e empresa (definir na UI do Coolify) ---
+      - ADMIN_USERNAME=${ADMIN_EMAIL}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - COMPANY_NAME=${COMPANY_NAME:-ChatIA}
+      - CONTACT_PHONE=${CONTACT_PHONE:-}
+      # --- Diversos ---
+      - STORAGE_TYPE=local
+      - LOG_LEVEL=info
+      - FFMPEG_PATH=/usr/bin/ffmpeg
+      - TZ=${TZ:-America/Sao_Paulo}
+      # --- SMTP (recuperación de contraseña; helpers/SendMail.ts usa MAIL_*) ---
+      - MAIL_HOST=${MAIL_HOST:-}
+      - MAIL_USER=${MAIL_USER:-}
+      - MAIL_PASS=${MAIL_PASS:-}
+      - MAIL_FROM=${MAIL_FROM:-}
+      # --- Pagos (opcionales; solo si se usa el módulo Financeiro) ---
+      - MP_ACCESS_TOKEN=${MP_ACCESS_TOKEN:-}
+      - GERENCIANET_CLIENT_ID=${GERENCIANET_CLIENT_ID:-}
+      - GERENCIANET_CLIENT_SECRET=${GERENCIANET_CLIENT_SECRET:-}
+      - GERENCIANET_PIX_CERT=${GERENCIANET_PIX_CERT:-}
+      - GERENCIANET_SANDBOX=${GERENCIANET_SANDBOX:-false}
+      # --- Meta/Facebook (opcional; canales FB/IG) ---
+      - FACEBOOK_APP_ID=${FACEBOOK_APP_ID:-}
+      - FACEBOOK_APP_SECRET=${FACEBOOK_APP_SECRET:-}
+      - VERIFY_TOKEN=${VERIFY_TOKEN:-}
+      # --- Otros opcionales del .env.example ---
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - MASTER_KEY=${MASTER_KEY:-}
+      - COMPANY_TOKEN=${COMPANY_TOKEN:-}
+      - ENV_TOKEN=${ENV_TOKEN:-}
+      - DEMO=${DEMO:-false}
+      - FLOW_MENU_COOLDOWN_SEC=${FLOW_MENU_COOLDOWN_SEC:-30}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 90s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # ATENÇÃO: variáveis REACT_APP_* são de BUILD TIME (ficam no bundle).
+        # Se mudar o domínio do backend, precisa REDEPLOY (rebuild) do frontend.
+        - REACT_APP_BACKEND_URL=https://${BACKEND_DOMAIN}
+        - REACT_APP_NAME_SYSTEM=${COMPANY_NAME:-ChatIA}
+        - REACT_APP_COMPANY_NAME=${COMPANY_NAME:-ChatIA}
+        - REACT_APP_NUMBER_SUPPORT=${CONTACT_PHONE:-}
+        - REACT_APP_HOURS_CLOSE_TICKETS_AUTO=9999
+        - REACT_APP_PRIMARY_COLOR=${PRIMARY_COLOR:-#6B46C1}
+        - REACT_APP_PRIMARY_DARK=${PRIMARY_DARK:-#4C1D95}
+        - REACT_APP_FACEBOOK_APP_ID=
+        - REACT_APP_REQUIRE_BUSINESS_MANAGEMENT=FALSE
+    restart: unless-stopped
+    environment:
+      # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)
+      - SERVICE_FQDN_FRONTEND_80
+      - NODE_ENV=production
+    depends_on:
+      backend:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:80/"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  postgres:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=chatia
+      - POSTGRES_USER=chatia
+      - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chatia -d chatia"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  redis:
+    image: redis:6-alpine
+    restart: unless-stopped
+    # ⚠️ appendonly OBLIGATORIO: las sesiones/credenciales de WhatsApp (Baileys)
+    # viven en Redis (claves sessions:{whatsappId}:*). Sin AOF, un crash de Redis
+    # desconectaría todos los WhatsApp y habría que re-escanear QR.
+    command: redis-server --requirepass "${SERVICE_PASSWORD_REDIS}" --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $${SERVICE_PASSWORD_REDIS} ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_public:
+  backend_uploads:
+  backend_private:
+  backend_certs:
+  backups:

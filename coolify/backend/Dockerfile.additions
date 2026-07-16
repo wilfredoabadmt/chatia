@@ -1,0 +1,16 @@
+# ============================================
+# ChatIA - Fragmento a añadir al backend/Dockerfile
+# ============================================
+# El Dockerfile del backend ya existe en el repo de la app.
+# Añade estas líneas ANTES del CMD/ENTRYPOINT final
+# (después de compilar TypeScript a dist/):
+
+# --- Coolify: entrypoint con migrations + seeds ---
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+COPY scripts/ /app/scripts/
+RUN chmod +x /app/docker-entrypoint.sh
+
+# El compose de Coolify usa:
+#   command: ["sh", "/app/docker-entrypoint.sh"]
+# por lo que NO hace falta cambiar el CMD original del Dockerfile
+# (así el mismo Dockerfile sigue sirviendo para la VPS clásica).
