@@ -2,10 +2,12 @@ FROM node:20-alpine AS builder
 
 RUN apk add --no-cache git python3 make g++
 
+ENV NODE_OPTIONS="--max-old-space-size=1024"
+
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
-RUN npm install bcryptjs --save
+RUN npm install --no-audit --no-fund --loglevel error --legacy-peer-deps
+RUN npm install bcryptjs --save --no-audit --no-fund --loglevel error
 COPY . .
 RUN npm run build
 
