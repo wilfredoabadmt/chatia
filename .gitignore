@@ -70,3 +70,6 @@ backups/
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# MCP config (contiene tokens - NO versionar)
+.mcp.json

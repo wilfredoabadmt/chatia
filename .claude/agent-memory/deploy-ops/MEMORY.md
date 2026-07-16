@@ -4,3 +4,4 @@ Una línea por memoria: - [Título](archivo.md) — gancho de una línea.
 Vacío al inicio; el subagente lo irá poblando (IDs de la plataforma, modos de
 fallo recurrentes del deploy, comando de migración, healthcheck, etc.).
 -->
+- [Coolify ChatIA deploy](coolify-chatia-deploy.md) — UUIDs infra, compose/env vars, entrypoint, avisos críticos y bloqueo MCP.
