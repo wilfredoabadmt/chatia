@@ -14,7 +14,7 @@ import ProcessExpiredLaneTimersJob from "./services/TicketServices/ProcessExpire
 
 // === AJUSTES PARA NOVA INSTALAÇÃO ===
 // Fallback de porta e host explícito para evitar conflito e facilitar proxy/PM2
-const PORT = Number(process.env.PORT) || 8080;
+const PORT = Number(process.env.PORT) || 3001;
 const HOST = process.env.HOST || "0.0.0.0";
 
 const server = app.listen(PORT, HOST, async () => {
