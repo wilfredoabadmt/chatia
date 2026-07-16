@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM node:20-alpine AS builder
 
 RUN apk add --no-cache git python3 make g++
@@ -6,8 +7,8 @@ ENV NODE_OPTIONS="--max-old-space-size=1024"
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --no-audit --no-fund --loglevel error --legacy-peer-deps
-RUN npm install bcryptjs --save --no-audit --no-fund --loglevel error
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --no-audit --no-fund --loglevel error --legacy-peer-deps
 COPY . .
 RUN npm run build
 

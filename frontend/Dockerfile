@@ -1,10 +1,12 @@
+# syntax=docker/dockerfile:1
 FROM node:20-alpine AS builder
 
 RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
 
 COPY . .
 

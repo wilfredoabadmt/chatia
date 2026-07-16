@@ -67,9 +67,9 @@ backups/
 .cache/
 
 # Package manager
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
 
 # MCP config (contiene tokens - NO versionar)
 .mcp.json
