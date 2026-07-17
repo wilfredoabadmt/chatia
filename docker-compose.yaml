@@ -14,6 +14,9 @@
 services:
   backend:
     image: ghcr.io/wilfredoabadmt/chatia-backend:latest
+    networks:
+      - coolify
+      - default
     restart: unless-stopped
     # O entrypoint espera o banco, roda db-prepare + migrations (3 rodadas)
     # + seeds + seed_admin, e então inicia o servidor.
@@ -111,6 +114,9 @@ services:
 
   frontend:
     image: ghcr.io/wilfredoabadmt/chatia-frontend:latest
+    networks:
+      - coolify
+      - default
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)
@@ -168,3 +174,9 @@ volumes:
   backend_private:
   backend_certs:
   backups:
+
+networks:
+  coolify:
+    external: true
+  default:
+    driver: bridge
