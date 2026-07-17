@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ==========================================
-# BACKEND BUILD STAGES
+# STAGE 1: Build backend (compile TS)
 # ==========================================
 FROM node:20-alpine AS backend-builder
 RUN apk add --no-cache git python3 make g++
@@ -14,7 +14,15 @@ COPY backend/ .
 RUN npm run build
 
 # ==========================================
-# FINAL BACKEND IMAGE (production deps only)
+# STAGE 2: Install production deps on slim image (no chromium/ffmpeg)
+# ==========================================
+FROM node:20-alpine AS backend-deps
+WORKDIR /app
+COPY backend/package*.json ./
+RUN NODE_OPTIONS="--max-old-space-size=384" npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev && npm cache clean --force
+
+# ==========================================
+# STAGE 3: Final backend image (dist + deps + runtime packages)
 # ==========================================
 FROM node:20-alpine AS backend
 RUN apk add --no-cache ffmpeg chromium nss freetype harfbuzz ca-certificates ttf-freefont
@@ -23,8 +31,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     NODE_ENV=production
 WORKDIR /app
 COPY --from=backend-builder /app/dist ./dist
+COPY --from=backend-deps /app/node_modules ./node_modules
 COPY backend/package*.json ./
-RUN npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev && npm cache clean --force
 COPY --from=backend-builder /app/.sequelizerc ./
 COPY --from=backend-builder /app/database.config.js ./
 COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
