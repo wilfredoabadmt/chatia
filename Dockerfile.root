@@ -14,7 +14,7 @@ COPY backend/ .
 RUN npm run build
 
 # ==========================================
-# FINAL BACKEND IMAGE
+# FINAL BACKEND IMAGE (production deps only)
 # ==========================================
 FROM node:20-alpine AS backend
 RUN apk add --no-cache ffmpeg chromium nss freetype harfbuzz ca-certificates ttf-freefont
@@ -23,8 +23,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     NODE_ENV=production
 WORKDIR /app
 COPY --from=backend-builder /app/dist ./dist
-COPY --from=backend-builder /app/node_modules ./node_modules
-COPY --from=backend-builder /app/package*.json ./
+COPY backend/package*.json ./
+RUN npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev && npm cache clean --force
 COPY --from=backend-builder /app/.sequelizerc ./
 COPY --from=backend-builder /app/database.config.js ./
 COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
