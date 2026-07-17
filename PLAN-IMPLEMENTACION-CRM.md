@@ -79,11 +79,11 @@ masivas, flujos visuales y Kanban de ventas.
 
 | Antes (VPS directa + SSH) | Después (GitHub + Coolify + MCP) |
 |---|---|
-| SSH + `instalador-chatia-v4.5.1.sh` interactivo | `@mcp:coolify:service create` con docker-compose |
+| SSH + `instalador-chatia-v4.5.1.sh` interactivo | `@mcp:coolify:service` (action: `create`) con docker-compose |
 | SSH + `update-chatia-v4.5.sh` manual | `git push` → webhook → `@mcp:coolify:deploy` automático |
 | Nginx + Certbot en el host | Traefik + Let's Encrypt automático de Coolify |
 | Migrations/seeds vía `docker exec` | `docker-entrypoint.sh` automático dentro del contenedor |
-| Backups manuales | `@mcp:coolify:scheduled_tasks create` (pg_dump cron) |
+| Backups manuales | `@mcp:coolify:scheduled_tasks` (action: `create`) (pg_dump cron) |
 | Secretos en `.credentials` en disco | `@mcp:coolify:env_vars` en la UI de Coolify |
 | Repo original `TappyID/chatia-4.4` | Repo propio `wilfredoabadmt/chatia` vía `@mcp:github:create_repository` |
 | Sin CI/CD | GitHub Actions + Auto Deploy de Coolify |
@@ -629,20 +629,23 @@ git push origin main
 
 #### 1.1 Crear proyecto en Coolify
 ```
-@mcp:coolify:projects create
+@mcp:coolify:projects
+  action: "create"
   name: "ChatIA CRM"
   description: "CRM WhatsApp multi-tenant SaaS"
 ```
 
 #### 1.2 Verificar GitHub App
 ```
-@mcp:coolify:github_apps list
+@mcp:coolify:github_apps
+  action: "list"
 ```
 Confirmar `cool-wilfredoabad` (UUID: `uww80ocswk0s0gccgok44kc8`) tiene acceso al repo.
 
 #### 1.3 Crear servicio Docker Compose
 ```
-@mcp:coolify:service create
+@mcp:coolify:service
+  action: "create"
   name: "chatia-crm"
   project_uuid: "<UUID del proyecto>"
   server_uuid: "zcockokck4o084040g8g40kc"
@@ -653,10 +656,23 @@ Confirmar `cool-wilfredoabad` (UUID: `uww80ocswk0s0gccgok44kc8`) tiene acceso al
 
 #### 1.4 Configurar variables de entorno
 ```
-@mcp:coolify:env_vars bulk_update
-  resource: service
+@mcp:coolify:env_vars
+  action: "bulk_update"
+  resource: "service"
   uuid: "<UUID>"
-  data: [BACKEND_DOMAIN, FRONTEND_DOMAIN, ADMIN_EMAIL, ADMIN_PASSWORD, COMPANY_NAME, TZ]
+  data:
+    - key: "BACKEND_DOMAIN"
+      value: "backend.su-dominio.com"
+    - key: "FRONTEND_DOMAIN"
+      value: "su-dominio.com"
+    - key: "ADMIN_EMAIL"
+      value: "admin@su-dominio.com"
+    - key: "ADMIN_PASSWORD"
+      value: "su-contrasena-segura"
+    - key: "COMPANY_NAME"
+      value: "ChatIA"
+    - key: "TZ"
+      value: "America/Santiago"
 ```
 
 #### 1.5 DNS: Crear registros A apuntando a `89.116.29.168`
@@ -682,7 +698,7 @@ Ejecutar el checklist completo de la **sección 9**.
 ### FASE 3 — Producción (1 día)
 
 #### 3.1 Activar Auto Deploy
-#### 3.2 Crear backups programados con `@mcp:coolify:scheduled_tasks create`
+#### 3.2 Crear backups programados con `@mcp:coolify:scheduled_tasks` (action: `create`)
 #### 3.3 Conectar WhatsApp reales (QR)
 #### 3.4 Re-verificar webhooks Meta (si aplica)
 
@@ -941,6 +957,6 @@ Proyecto ChatIA: PENDIENTE CREAR
 2. **Fase 0.3:** Preparar archivos de deploy (copiar coolify/ al lugar correcto)
 3. **Fase 0.4:** Proteger debug routes
 4. **Fase 0.7:** Commit + push al repo nuevo
-5. **Fase 1.1:** Crear proyecto en Coolify con `@mcp:coolify:projects create`
-6. **Fase 1.3:** Crear servicio con `@mcp:coolify:service create`
+5. **Fase 1.1:** Crear proyecto en Coolify con `@mcp:coolify:projects` (action: `create`)
+6. **Fase 1.3:** Crear servicio con `@mcp:coolify:service` (action: `create`)
 7. **Fase 1.6:** Primer deploy con `@mcp:coolify:deploy`

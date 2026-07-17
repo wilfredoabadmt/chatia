@@ -3,7 +3,7 @@
 # ==========================================
 # STAGE 1: Install production deps on slim image (no chromium/ffmpeg)
 # ==========================================
-FROM node:20-alpine AS backend-deps
+FROM node:22-alpine AS backend-deps
 WORKDIR /app
 COPY backend/package*.json ./
 RUN NODE_OPTIONS="--max-old-space-size=384" npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev && npm cache clean --force
@@ -11,7 +11,7 @@ RUN NODE_OPTIONS="--max-old-space-size=384" npm install --no-audit --no-fund --l
 # ==========================================
 # STAGE 2: Final backend image (pre-compiled dist + deps + runtime packages)
 # ==========================================
-FROM node:20-alpine AS backend
+FROM node:22-alpine AS backend
 RUN apk add --no-cache ffmpeg chromium nss freetype harfbuzz ca-certificates ttf-freefont
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
