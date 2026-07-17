@@ -28,22 +28,11 @@ module.exports = {
       }
       webpackConfig.plugins = (webpackConfig.plugins || []).filter(p => p.constructor?.name !== "ESLintWebpackPlugin");
 
-      // Limit Terser memory usage by disabling parallel execution
-      if (webpackConfig.optimization && webpackConfig.optimization.minimizer) {
-        const terser = webpackConfig.optimization.minimizer.find(
-          m => m.constructor && m.constructor.name === 'TerserPlugin'
-        );
-        if (terser) {
-          terser.options = {
-            ...terser.options,
-            parallel: false,
-            terserOptions: {
-              ...terser.options?.terserOptions,
-              compress: { passes: 1, drop_console: true },
-              mangle: true
-            }
-          };
-        }
+      // DISABLE Terser entirely — it's the #1 memory hog during Docker builds.
+      // Output JS will be larger but the build won't OOM on 8GB servers.
+      if (webpackConfig.optimization) {
+        webpackConfig.optimization.minimizer = [];
+        webpackConfig.optimization.minimize = false;
       }
 
       // Reduce webpack parallelism to prevent OOM during Docker builds

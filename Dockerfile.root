@@ -17,8 +17,6 @@ RUN npm run build
 # FRONTEND BUILD STAGES
 # ==========================================
 FROM node:20-alpine AS frontend-builder
-# Force BuildKit serialization by copying from backend-builder
-COPY --from=backend-builder /app/dist/server.js /tmp/backend-compiled.js
 RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY frontend/package*.json ./
@@ -51,7 +49,7 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL \
     REACT_APP_FEATURE_KANBAN_V2=$REACT_APP_FEATURE_KANBAN_V2 \
     REACT_APP_FEATURE_NOVA=$REACT_APP_FEATURE_NOVA \
     REACT_APP_FEATURE_COMPANY_SEARCH=$REACT_APP_FEATURE_COMPANY_SEARCH \
-    NODE_OPTIONS="--max-old-space-size=2048" \
+    NODE_OPTIONS="--max-old-space-size=3072" \
     GENERATE_SOURCEMAP=false \
     CI=true
 
