@@ -129,6 +129,9 @@ services:
         - REACT_APP_PRIMARY_DARK=${PRIMARY_DARK:-#4C1D95}
         - REACT_APP_FACEBOOK_APP_ID=
         - REACT_APP_REQUIRE_BUSINESS_MANAGEMENT=FALSE
+        - REACT_APP_FEATURE_KANBAN_V2=TRUE
+        - REACT_APP_FEATURE_NOVA=TRUE
+        - REACT_APP_FEATURE_COMPANY_SEARCH=TRUE
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)

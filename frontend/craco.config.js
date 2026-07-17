@@ -36,7 +36,12 @@ module.exports = {
         if (terser) {
           terser.options = {
             ...terser.options,
-            parallel: false
+            parallel: false,
+            terserOptions: {
+              ...terser.options?.terserOptions,
+              compress: { passes: 1, drop_console: true },
+              mangle: true
+            }
           };
         }
       }
@@ -47,6 +52,21 @@ module.exports = {
       // Disable filesystem cache to reduce memory usage
       if (process.env.NODE_ENV === 'production') {
         webpackConfig.cache = false;
+
+        // Aggressively reduce chunk splitting to save memory
+        webpackConfig.optimization = {
+          ...webpackConfig.optimization,
+          splitChunks: {
+            cacheGroups: {
+              default: false,
+              vendors: false
+            }
+          },
+          moduleIds: 'deterministic'
+        };
+
+        // No source maps in production — saves enormous memory
+        webpackConfig.devtool = false;
       }
 
       // Limit source-map-loader workers
