@@ -117,21 +117,6 @@ services:
       context: .
       dockerfile: Dockerfile.root
       target: frontend
-      args:
-        # ATENÇÃO: variáveis REACT_APP_* são de BUILD TIME (ficam no bundle).
-        # Se mudar o domínio do backend, precisa REDEPLOY (rebuild) do frontend.
-        - REACT_APP_BACKEND_URL=https://${BACKEND_DOMAIN}
-        - REACT_APP_NAME_SYSTEM=${COMPANY_NAME:-ChatIA}
-        - REACT_APP_COMPANY_NAME=${COMPANY_NAME:-ChatIA}
-        - REACT_APP_NUMBER_SUPPORT=${CONTACT_PHONE:-}
-        - REACT_APP_HOURS_CLOSE_TICKETS_AUTO=9999
-        - REACT_APP_PRIMARY_COLOR=${PRIMARY_COLOR:-#6B46C1}
-        - REACT_APP_PRIMARY_DARK=${PRIMARY_DARK:-#4C1D95}
-        - REACT_APP_FACEBOOK_APP_ID=
-        - REACT_APP_REQUIRE_BUSINESS_MANAGEMENT=FALSE
-        - REACT_APP_FEATURE_KANBAN_V2=TRUE
-        - REACT_APP_FEATURE_NOVA=TRUE
-        - REACT_APP_FEATURE_COMPANY_SEARCH=TRUE
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)

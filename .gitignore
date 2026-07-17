@@ -6,8 +6,7 @@ node_modules/
 # Testing
 coverage/
 
-# Production builds
-build/
+# Production builds (backend only — frontend/build is committed for Coolify)
 dist/
 
 # Environment variables
