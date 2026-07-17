@@ -19,7 +19,12 @@ RUN npm run build
 FROM node:20-alpine AS frontend-builder
 # Force BuildKit serialization by copying from backend-builder
 COPY --from=backend-builder /app/dist/server.js /tmp/backend-compiled.js
-RUN apk add --no-cache python3 make g++
+RUN apk add --no-cache python3 make g++ && \
+    # Create 2GB swap to prevent OOM kills during heavy webpack builds
+    dd if=/dev/zero of=/swapfile bs=1M count=2048 2>/dev/null && \
+    chmod 600 /swapfile && \
+    mkswap /swapfile && \
+    swapon /swapfile || echo "WARN: swap creation failed, continuing without swap"
 WORKDIR /app
 COPY frontend/package*.json ./
 RUN --mount=type=cache,target=/root/.npm \
@@ -51,7 +56,7 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL \
     REACT_APP_FEATURE_KANBAN_V2=$REACT_APP_FEATURE_KANBAN_V2 \
     REACT_APP_FEATURE_NOVA=$REACT_APP_FEATURE_NOVA \
     REACT_APP_FEATURE_COMPANY_SEARCH=$REACT_APP_FEATURE_COMPANY_SEARCH \
-    NODE_OPTIONS=--max-old-space-size=2048 \
+    NODE_OPTIONS="--max-old-space-size=4096 --no-compilation-cache" \
     GENERATE_SOURCEMAP=false
 
 RUN npx craco build

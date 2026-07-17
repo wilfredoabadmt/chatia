@@ -27,7 +27,7 @@ module.exports = {
         );
       }
       webpackConfig.plugins = (webpackConfig.plugins || []).filter(p => p.constructor?.name !== "ESLintWebpackPlugin");
-      
+
       // Limit Terser memory usage by disabling parallel execution
       if (webpackConfig.optimization && webpackConfig.optimization.minimizer) {
         const terser = webpackConfig.optimization.minimizer.find(
@@ -40,6 +40,37 @@ module.exports = {
           };
         }
       }
+
+      // Reduce webpack parallelism to prevent OOM during Docker builds
+      webpackConfig.parallelism = 1;
+
+      // Limit cache size to prevent memory bloat
+      webpackConfig.cache = {
+        ...webpackConfig.cache,
+        type: 'filesystem',
+        maxMemoryGenerations: 1,
+        cacheSize: 50 * 1024 * 1024 // 50MB max cache
+      };
+
+      // Limit source-map-loader workers
+      webpackConfig.module.rules.forEach(rule => {
+        if (rule && Array.isArray(rule.use)) {
+          rule.use = rule.use.map(loader => {
+            if (typeof loader === 'object' && loader.options) {
+              if (loader.loader && (
+                loader.loader.includes('source-map-loader') ||
+                loader.loader.includes('babel-loader') ||
+                loader.loader.includes('css-loader') ||
+                loader.loader.includes('file-loader') ||
+                loader.loader.includes('url-loader')
+              )) {
+                loader.options = { ...loader.options, worker: 0 };
+              }
+            }
+            return loader;
+          });
+        }
+      });
       webpackConfig.resolve = webpackConfig.resolve || {};
       webpackConfig.resolve.plugins = (webpackConfig.resolve.plugins || []).filter(p => p.constructor?.name !== "ModuleScopePlugin");
       webpackConfig.resolve.fallback = {
