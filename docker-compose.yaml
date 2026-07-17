@@ -13,10 +13,7 @@
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.root
-      target: backend
+    image: ghcr.io/wilfredoabadmt/chatia-backend:latest
     restart: unless-stopped
     # O entrypoint espera o banco, roda db-prepare + migrations (3 rodadas)
     # + seeds + seed_admin, e então inicia o servidor.
@@ -113,10 +110,7 @@ services:
       start_period: 90s
 
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.root
-      target: frontend
+    image: ghcr.io/wilfredoabadmt/chatia-frontend:latest
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)
