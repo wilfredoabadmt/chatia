@@ -19,6 +19,9 @@ services:
       - internal_net
     expose:
       - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.backend.loadbalancer.server.port=3000"
     restart: unless-stopped
     # O entrypoint espera o banco, roda db-prepare + migrations (3 rodadas)
     # + seeds + seed_admin, e então inicia o servidor.
@@ -121,6 +124,9 @@ services:
       - internal_net
     expose:
       - 80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)
