@@ -6,8 +6,8 @@ node_modules/
 # Testing
 coverage/
 
-# Production builds (backend only — frontend/build is committed for Coolify)
-dist/
+# Production builds — frontend/build and backend/dist are committed for Coolify
+# (VPS Docker build OOM on tsc compilation)
 
 # Environment variables
 .env

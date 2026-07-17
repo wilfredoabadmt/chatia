@@ -1,20 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ==========================================
-# STAGE 1: Build backend (compile TS)
-# ==========================================
-FROM node:20-alpine AS backend-builder
-RUN apk add --no-cache git python3 make g++
-ENV NODE_OPTIONS="--max-old-space-size=1024"
-WORKDIR /app
-COPY backend/package*.json ./
-RUN --mount=type=cache,target=/root/.npm \
-    npm install --no-audit --no-fund --loglevel error --legacy-peer-deps
-COPY backend/ .
-RUN npm run build
-
-# ==========================================
-# STAGE 2: Install production deps on slim image (no chromium/ffmpeg)
+# STAGE 1: Install production deps on slim image (no chromium/ffmpeg)
 # ==========================================
 FROM node:20-alpine AS backend-deps
 WORKDIR /app
@@ -22,7 +9,7 @@ COPY backend/package*.json ./
 RUN NODE_OPTIONS="--max-old-space-size=384" npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev && npm cache clean --force
 
 # ==========================================
-# STAGE 3: Final backend image (dist + deps + runtime packages)
+# STAGE 2: Final backend image (pre-compiled dist + deps + runtime packages)
 # ==========================================
 FROM node:20-alpine AS backend
 RUN apk add --no-cache ffmpeg chromium nss freetype harfbuzz ca-certificates ttf-freefont
@@ -30,11 +17,11 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     NODE_ENV=production
 WORKDIR /app
-COPY --from=backend-builder /app/dist ./dist
+COPY backend/dist ./dist
 COPY --from=backend-deps /app/node_modules ./node_modules
 COPY backend/package*.json ./
-COPY --from=backend-builder /app/.sequelizerc ./
-COPY --from=backend-builder /app/database.config.js ./
+COPY backend/.sequelizerc ./
+COPY backend/database.config.js ./
 COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
 COPY backend/scripts/ /app/scripts/
 RUN chmod +x /app/docker-entrypoint.sh
