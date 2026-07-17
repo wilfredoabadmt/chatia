@@ -44,13 +44,10 @@ module.exports = {
       // Reduce webpack parallelism to prevent OOM during Docker builds
       webpackConfig.parallelism = 1;
 
-      // Limit cache size to prevent memory bloat
-      webpackConfig.cache = {
-        ...webpackConfig.cache,
-        type: 'filesystem',
-        maxMemoryGenerations: 1,
-        cacheSize: 50 * 1024 * 1024 // 50MB max cache
-      };
+      // Disable filesystem cache to reduce memory usage
+      if (process.env.NODE_ENV === 'production') {
+        webpackConfig.cache = false;
+      }
 
       // Limit source-map-loader workers
       webpackConfig.module.rules.forEach(rule => {
