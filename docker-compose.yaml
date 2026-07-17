@@ -41,7 +41,7 @@ services:
       - FRONTEND_URL=https://${FRONTEND_DOMAIN}
       # --- PostgreSQL ---
       - DB_DIALECT=postgres
-      - DB_HOST=postgres
+      - DB_HOST=chatia-db
       - DB_PORT=5432
       - DB_USER=chatia
       - DB_PASS=${SERVICE_PASSWORD_POSTGRES}
@@ -51,18 +51,18 @@ services:
       - DB_POOL_ACQUIRE=30000
       - DB_POOL_IDLE=600000
       # --- Redis (senha gerada pelo Coolify: alfanumérica, não precisa URL-encode) ---
-      - IO_REDIS_SERVER=redis
+      - IO_REDIS_SERVER=chatia-redis
       - IO_REDIS_PORT=6379
       - IO_REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
-      - REDIS_HOST=redis
+      - REDIS_HOST=chatia-redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
       - REDIS_DB=0
       - REDIS_SECRET_KEY=MULTI100
       - REDIS_OPT_LIMITER_MAX=1
       - REDIS_OPT_LIMITER_DURATION=3000
-      - REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@redis:6379
-      - IO_REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@redis:6379
+      - REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@chatia-redis:6379
+      - IO_REDIS_URI=redis://:${SERVICE_PASSWORD_REDIS}@chatia-redis:6379
       # --- Segredos (gerados automaticamente pelo Coolify) ---
       - JWT_SECRET=${SERVICE_PASSWORD_64_JWTSECRET}
       - JWT_REFRESH_SECRET=${SERVICE_PASSWORD_64_JWTREFRESH}
@@ -101,9 +101,9 @@ services:
       - DEMO=${DEMO:-false}
       - FLOW_MENU_COOLDOWN_SEC=${FLOW_MENU_COOLDOWN_SEC:-30}
     depends_on:
-      postgres:
+      chatia-db:
         condition: service_healthy
-      redis:
+      chatia-redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
@@ -132,7 +132,7 @@ services:
       retries: 10
       start_period: 20s
 
-  postgres:
+  chatia-db:
     image: postgres:13
     networks:
       - internal_net
@@ -152,7 +152,7 @@ services:
       retries: 12
       start_period: 20s
 
-  redis:
+  chatia-redis:
     image: redis:6-alpine
     networks:
       - internal_net
