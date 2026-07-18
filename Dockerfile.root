@@ -31,6 +31,15 @@ COPY backend/database.config.js ./
 COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
 COPY backend/scripts/ /app/scripts/
 RUN chmod +x /app/docker-entrypoint.sh
+# Diagnostic: print layer sizes during build (remove after measuring)
+RUN echo "=== LAYER SIZES ===" && \
+    echo -n "node_modules: " && du -sh /app/node_modules 2>/dev/null | cut -f1 && \
+    echo -n "dist: " && du -sh /app/dist 2>/dev/null | cut -f1 && \
+    echo -n "apk (system): " && du -sh /usr/lib /usr/share 2>/dev/null | awk '{s+=$1}END{print s"M"}' && \
+    echo "--- Top 15 node_modules by size ---" && \
+    du -sh /app/node_modules/* 2>/dev/null | sort -hr | head -15 && \
+    echo "--- Total image ---" && du -sh /app && \
+    echo "=== END DIAGNOSTIC ==="
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
 
