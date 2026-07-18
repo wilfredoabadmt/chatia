@@ -2,11 +2,6 @@
 
 # ==========================================
 # STAGE 1: Install production deps ONLY
-# - npm ci: deterministic, faster than npm install
-# - --ignore-scripts: prevents puppeteer from downloading Chromium (~170MB)
-#   and @ffmpeg-installer/ffmpeg / ffmpeg-static from downloading extra
-#   ffmpeg binaries (~200MB total). System ffmpeg is used via FFMPEG_PATH.
-# - BuildKit cache mount: reuses npm cache across builds
 # ==========================================
 FROM node:22-alpine AS backend-deps
 WORKDIR /app
@@ -15,12 +10,25 @@ RUN --mount=type=cache,target=/root/.npm \
     NODE_OPTIONS="--max-old-space-size=384" \
     npm ci --omit=dev --ignore-scripts --no-audit --no-fund && \
     npm prune --omit=dev
+# Diagnostic 1: node_modules size right after install
+RUN echo "=== DIAG STAGE1: node_modules ===" && \
+    du -sh /app/node_modules && \
+    du -sh /app/node_modules/* 2>/dev/null | sort -hr | head -15 && \
+    echo "=== END STAGE1 ==="
 
 # ==========================================
-# STAGE 2: Final backend image (pre-compiled dist + deps + runtime packages)
+# STAGE 2: Final backend image
 # ==========================================
 FROM node:22-alpine AS backend
+# Diagnostic 2: base image size before apk
+RUN echo "=== DIAG BASE: alpine base ===" && du -sh /usr/lib /usr/share /app 2>/dev/null && echo "=== END BASE ==="
 RUN apk add --no-cache ffmpeg ca-certificates
+# Diagnostic 3: size after apk install
+RUN echo "=== DIAG APK: after ffmpeg ===" && \
+    du -sh /usr/lib /usr/share /app 2>/dev/null && \
+    apk list --installed 2>/dev/null | wc -l && \
+    echo "packages installed" && \
+    echo "=== END APK ==="
 ENV NODE_ENV=production
 WORKDIR /app
 COPY backend/dist ./dist
@@ -31,14 +39,9 @@ COPY backend/database.config.js ./
 COPY backend/docker-entrypoint.sh /app/docker-entrypoint.sh
 COPY backend/scripts/ /app/scripts/
 RUN chmod +x /app/docker-entrypoint.sh
-# Diagnostic: print layer sizes during build (remove after measuring)
-RUN echo "=== LAYER SIZES ===" && \
-    echo -n "node_modules: " && du -sh /app/node_modules 2>/dev/null | cut -f1 && \
-    echo -n "dist: " && du -sh /app/dist 2>/dev/null | cut -f1 && \
-    echo -n "apk (system): " && du -sh /usr/lib /usr/share 2>/dev/null | awk '{s+=$1}END{print s"M"}' && \
-    echo "--- Top 15 node_modules by size ---" && \
-    du -sh /app/node_modules/* 2>/dev/null | sort -hr | head -15 && \
-    echo "--- Total image ---" && du -sh /app && \
+# Diagnostic 4: final image size
+RUN echo "=== DIAG FINAL: complete image ===" && \
+    du -sh /app/node_modules /app/dist /usr/lib /usr/share /app 2>/dev/null && \
     echo "=== END DIAGNOSTIC ==="
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
