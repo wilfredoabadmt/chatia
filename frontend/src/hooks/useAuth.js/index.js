@@ -81,9 +81,15 @@ const useAuth = () => {
           localStorage.setItem("user", JSON.stringify(data.user));
 
         } catch (err) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("user");
+          setIsAuth(false);
+          setUser({});
           if (!isLoggingOutRef.current) {
             toastError(err);
           }
+          history.push("/login");
         }
       }
       setLoading(false);

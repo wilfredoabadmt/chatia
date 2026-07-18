@@ -72,6 +72,12 @@ class SocketWorker {
         const newToken = localStorage.getItem("token");
         if (newToken && newToken !== token) {
           this.configureSocket();
+        } else {
+          // Token is rejected and has not been updated. The session has expired.
+          localStorage.removeItem("token");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("user");
+          window.location.href = "/login";
         }
       }
     });

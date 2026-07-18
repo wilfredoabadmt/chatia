@@ -900,7 +900,7 @@ const messages = {
           actions: "Acciones"
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "¿Estás seguro? ¡Esta acción no se puede revertir!"
         },
         buttons: {
@@ -999,7 +999,7 @@ const messages = {
           text: "Horarios de atención",
           add: "Agregar cola",
           edit: "Editar cola",
-          confirmationDelete: "Tem certeza? Todas as opções de integrações serão deletadas."
+          confirmationDelete: "¿Estás seguro? Se eliminarán todas las opciones de integración."
         },
         form: {
           name: "Nombre",
@@ -1746,11 +1746,11 @@ const messages = {
           cancel: "Cancelar"
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Esta acción no se puede revertir."
         },
         toasts: {
-          deleted: "Registro excluido"
+          deleted: "Registro eliminado"
         }
       },
       contactListItems: {
@@ -1780,13 +1780,13 @@ const messages = {
           actions: "Acciones"
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Esta acción no se puede revertir.",
           importMessage: "¿Desea importar los contactos de esta planilla? ",
           importTitlte: "Importar"
         },
         toasts: {
-          deleted: "Registro excluido"
+          deleted: "Registro eliminado"
         },
         downloadTemplate: "Haga clic aquí para descargar plantilla de ejemplo.",
         whatsappValid: "WhatsApp Válido",
@@ -1798,7 +1798,7 @@ const messages = {
         searchPlaceholder: "Búsqueda",
         subMenus: {
           list: "Panel",
-          tags: "Lanes"
+          tags: "Columnas"
         },
         ticketNumber: "Ticket nº ",
         viewTicket: "Ver Ticket",
@@ -1928,14 +1928,14 @@ const messages = {
           }
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Esta acción no se puede revertir."
         },
         toasts: {
           success: "Operación realizada con éxito",
           cancel: "Campaña cancelada",
           restart: "Campaña reiniciada",
-          deleted: "Registro excluido"
+          deleted: "Registro eliminado"
         },
         noPermission: "¡Esta empresa no tiene permisos para acceder a esta página! Te estamos redirigiendo.",
       },
@@ -2003,12 +2003,12 @@ const messages = {
           }
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Esta acción no se puede revertir."
         },
         toasts: {
           success: "Operación realizada con éxito",
-          deleted: "Registro excluido",
+          deleted: "Registro eliminado",
           noPermission: "¡Esta empresa no tiene permisos para acceder a esta página! Te estamos redirigiendo."
         }
       },
@@ -2065,14 +2065,14 @@ const messages = {
         },
         toasts: {
           success: "Cola guardada con éxito",
-          deleted: "Cola excluida con éxito",
+          deleted: "Cola eliminada con éxito",
           queueDeleted: "¡Cola eliminada con éxito!",
           botSaved: "Bot guardado con éxito",
           clickToSave: "Haga clic en guardar para registrar los cambios",
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
-          deleteMessage: "Você tem certeza? Essa ação não pode ser revertida! Os atendimentos dessa fila continuarão existindo, mas não terão mais nenhuma fila atribuída."
+          deleteTitle: "Eliminar",
+          deleteMessage: "¿Estás seguro? ¡Esta acción no se puede deshacer! Las atenciones de esta cola seguirán existiendo, pero ya no tendrán ninguna cola asignada."
         }
       },
       queue: {
@@ -2163,10 +2163,10 @@ const messages = {
           add: "Agregar usuario"
         },
         toasts: {
-          deleted: "Usuario excluido con éxito."
+          deleted: "Usuario eliminado con éxito."
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Todos los datos del usuario se perderán. Los atenciones abiertos de este usuario se moverán para la cola."
         }
       },
@@ -2201,7 +2201,7 @@ const messages = {
           useInstagram: "Instagram",
           useWhatsapp: "Whatsapp",
           useInternalChat: "Chat Interno",
-          useSchedules: "Agendamento",
+          useSchedules: "Programación",
           createdAt: "Creada En",
           dueDate: "Vencimiento",
           lastLogin: "Últ. Login",
@@ -2217,7 +2217,7 @@ const messages = {
           semester: "Semestral",
           yearly: "Anual",
           clear: "Limpiar",
-          delete: "Excluir",
+          delete: "Eliminar",
           user: "Usuario",
           save: "Guardar",
           folderSize: "Tamaño Carpeta",
@@ -2231,10 +2231,10 @@ const messages = {
           add: "Agregar empresa"
         },
         toasts: {
-          deleted: "Empresa excluida con éxito."
+          deleted: "Empresa eliminada con éxito."
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: "Eliminar",
           deleteMessage: "Todos los datos de la empresa se perderán. Los tickets abiertos de este usuario se moverán para la cola."
         },
         notifications: {
@@ -2251,7 +2251,7 @@ const messages = {
           enabled: "Habilitadas",
           disabled: "Desabilitadas",
           clear: "Cancelar",
-          delete: "Excluir",
+          delete: "Eliminar",
           save: "Guardar",
           yes: "Sí",
           no: "No",
@@ -2267,14 +2267,14 @@ const messages = {
           codeVideo: "Código del Video",
           description: "Descripción",
           clear: "Limpiar",
-          delete: "Excluir",
+          delete: "Eliminar",
           save: "Guardar"
         }
       },
       schedules: {
         title: "Programaciones",
         confirmationModal: {
-          deleteTitle: "¿Estás seguro de que quieres excluir este Agendamento?",
+          deleteTitle: "¿Estás seguro de que quieres eliminar esta programación?",
           deleteMessage: "Esta acción no se puede revertir."
         },
         table: {
@@ -2289,13 +2289,13 @@ const messages = {
           add: "Nueva Programación"
         },
         toasts: {
-          deleted: "Programación excluida con éxito."
+          deleted: "Programación eliminada con éxito."
         }
       },
       tags: {
         title: "Tags",
         confirmationModal: {
-          deleteTitle: "¿Estás seguro de que quieres excluir esta Tag?",
+          deleteTitle: "¿Estás seguro de que quieres eliminar esta etiqueta?",
           deleteMessage: "Esta acción no se puede revertir."
         },
         table: {
@@ -2311,14 +2311,14 @@ const messages = {
           add: "Nueva Tag"
         },
         toasts: {
-          deleted: "Tag excluido con éxito."
+          deleted: "Etiqueta eliminada con éxito."
         }
       },
       tagsKanban: {
-        title: "Lanes",
-        laneDefault: "En abierto",
+        title: "Columnas",
+        laneDefault: "Abierto",
         confirmationModal: {
-          deleteTitle: "¿Estás seguro de que quieres excluir esta Lane?",
+          deleteTitle: "¿Estás seguro de que quieres eliminar esta columna?",
           deleteMessage: "Esta acción no se puede revertir."
         },
         table: {
@@ -2328,11 +2328,11 @@ const messages = {
           actions: "Acciones"
         },
         buttons: {
-          add: "Nueva Lane",
+          add: "Nueva Columna",
           backToKanban: "Volver al Kanban"
         },
         toasts: {
-          deleted: "Lane excluida con éxito."
+          deleted: "Columna eliminada con éxito."
         }
       },
       files: {
@@ -2343,8 +2343,8 @@ const messages = {
           actions: "Acción"
         },
         toasts: {
-          deleted: "¡Lista excluida con éxito!",
-          deletedAll: "¡Todas las listas fueron excluidas con éxito!"
+          deleted: "¡Lista eliminada con éxito!",
+          deletedAll: "¡Todas las listas fueron eliminadas con éxito!"
         },
         buttons: {
           add: "Agregar",
@@ -2389,7 +2389,7 @@ const messages = {
             updating: "Actualizando...",
             creationCompanyUser: "Creación de Company/Usuario",
             evaluations: "Evaluaciones",
-            officeScheduling: "Agendamento de Expediente",
+            officeScheduling: "Horario de Atención",
             queueManagement: "Gerenciamiento por Cola",
             companyManagement: "Gerenciamiento por Empresa",
             connectionManagement: "Gerenciamiento por Conexión",
@@ -2594,7 +2594,7 @@ const messages = {
         }
       },
       ticketOptionsMenu: {
-        schedule: "Agendamento",
+        schedule: "Programación",
         delete: "Deletar",
         transfer: "Transferir",
         registerAppointment: "Observaciones del Contacto",
@@ -2611,7 +2611,7 @@ const messages = {
           message: "¡Atención! Todas las mensajes relacionadas con el ticket se perderán."
         },
         buttons: {
-          delete: "Excluir",
+          delete: "Eliminar",
           cancel: "Cancelar"
         }
       },
