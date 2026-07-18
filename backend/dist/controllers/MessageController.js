@@ -48,6 +48,8 @@ const SendWhatsAppMessage_1 = __importDefault(require("../services/WbotServices/
 const CreateMessageService_1 = __importDefault(require("../services/MessageServices/CreateMessageService"));
 const sendFacebookMessageMedia_1 = require("../services/FacebookServices/sendFacebookMessageMedia");
 const sendFacebookMessage_1 = __importDefault(require("../services/FacebookServices/sendFacebookMessage"));
+const sendWhatsAppCloudMessage_1 = require("../services/WhatsAppCloudServices/sendWhatsAppCloudMessage");
+const sendWhatsAppCloudMessageMedia_1 = require("../services/WhatsAppCloudServices/sendWhatsAppCloudMessageMedia");
 const ShowPlanCompanyService_1 = __importDefault(require("../services/CompanyService/ShowPlanCompanyService"));
 const ListMessagesServiceAll_1 = __importDefault(require("../services/MessageServices/ListMessagesServiceAll"));
 const ShowContactService_1 = __importDefault(require("../services/ContactServices/ShowContactService"));
@@ -771,6 +773,33 @@ const store = async (req, res) => {
                         isForwarded: false,
                     });
                 }
+                if (ticket.channel === "waba") {
+                    try {
+                        const sentMedia = await (0, sendWhatsAppCloudMessageMedia_1.sendWhatsAppCloudMessageMedia)({
+                            media,
+                            ticket,
+                            body: Array.isArray(body) ? body[index] : body,
+                        });
+                        const messageData = {
+                            wid: sentMedia.messages[0].id,
+                            ticketId: ticket.id,
+                            contactId: undefined,
+                            body: (Array.isArray(body) ? body[index] : body) || media.filename,
+                            fromMe: true,
+                            mediaType: media.mimetype.startsWith("image/") ? "image" : media.mimetype.startsWith("video/") ? "video" : media.mimetype.startsWith("audio/") ? "audio" : "document",
+                            mediaUrl: media.filename,
+                            read: true,
+                            quotedMsgId: null,
+                            ack: 1,
+                            dataJson: JSON.stringify(sentMedia),
+                            channel: "waba"
+                        };
+                        await (0, CreateMessageService_1.default)({ messageData, companyId: ticket.companyId });
+                    }
+                    catch (error) {
+                        console.error("Erro ao enviar mídia para WhatsApp Cloud:", error);
+                    }
+                }
                 if (["facebook", "instagram"].includes(ticket.channel)) {
                     try {
                         const sentMedia = await (0, sendFacebookMessageMedia_1.sendFacebookMessageMedia)({
@@ -796,7 +825,24 @@ const store = async (req, res) => {
             if (ticket.channel === "whatsapp" && isPrivate === "false") {
                 await (0, SendWhatsAppMessage_1.default)({ body, ticket, quotedMsg, vCard });
             }
-            else if (ticket.channel === "whatsapp" && isPrivate === "true") {
+            else if (ticket.channel === "waba" && isPrivate === "false") {
+                const sentMsg = await (0, sendWhatsAppCloudMessage_1.sendWhatsAppCloudMessage)({ body, ticket });
+                const messageData = {
+                    wid: sentMsg.messages[0].id,
+                    ticketId: ticket.id,
+                    contactId: undefined,
+                    body,
+                    fromMe: true,
+                    mediaType: "extendedTextMessage",
+                    read: true,
+                    quotedMsgId: null,
+                    ack: 1,
+                    dataJson: JSON.stringify(sentMsg),
+                    channel: "waba"
+                };
+                await (0, CreateMessageService_1.default)({ messageData, companyId: ticket.companyId });
+            }
+            else if ((ticket.channel === "whatsapp" || ticket.channel === "waba") && isPrivate === "true") {
                 const messageData = {
                     wid: `PVT${ticket.updatedAt.toString().replace(" ", "")}`,
                     ticketId: ticket.id,

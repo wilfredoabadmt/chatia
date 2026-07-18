@@ -17,7 +17,7 @@ exports.CreateContactSchema = zod_1.z.object({
         'chat_import'
     ]).default('manual'),
     isInAgenda: zod_1.z.boolean().default(true),
-    channel: zod_1.z.enum(['whatsapp', 'instagram', 'facebook']).default('whatsapp'),
+    channel: zod_1.z.enum(['whatsapp', 'instagram', 'facebook', 'waba']).default('whatsapp'),
     isGroup: zod_1.z.boolean().default(false),
     disableBot: zod_1.z.boolean().optional(),
     acceptAudioMessage: zod_1.z.boolean().optional(),

@@ -38,6 +38,8 @@ import apiContactRoutes from "./api/apiContactRoutes";
 import apiMessageRoutes from "./api/apiMessageRoutes";
 import companySettingsRoutes from "./companySettingsRoutes";
 
+import whatsappCloudRoutes from "./whatsappCloudRoutes";
+import whatsappCloudWebhookRoutes from "./whatsappCloudWebhookRoutes";
 import promptRoutes from "./promptRouter";
 import statisticsRoutes from "./statisticsRoutes";
 import scheduleMessageRoutes from "./ScheduledMessagesRoutes";
@@ -87,6 +89,8 @@ routes.use(ticketTagRoutes);
 routes.use("/api", apiCompanyRoutes);
 routes.use("/api", apiContactRoutes);
 routes.use("/api", apiMessageRoutes);
+routes.use("/api", whatsappCloudRoutes);
+routes.use("/api", whatsappCloudWebhookRoutes);
 
 routes.use(flowDefaultRoutes);
 routes.use(webHook)

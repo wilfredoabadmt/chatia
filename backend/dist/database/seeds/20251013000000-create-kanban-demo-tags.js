@@ -41,48 +41,48 @@ module.exports = {
             console.log("🚀 Criando tags Kanban de demonstração para companyId=1...");
             await queryInterface.bulkInsert("Tags", [
                 {
-                    name: "Novo",
+                    name: "Nuevo",
                     color: "#3B82F6",
                     kanban: 0,
                     timeLane: 0,
                     nextLaneId: null,
-                    greetingMessageLane: "Olá! Seu atendimento foi recebido e será iniciado em breve.",
+                    greetingMessageLane: "¡Hola! Su atención ha sido recibida y se iniciará pronto.",
                     rollbackLaneId: 0,
                     companyId: 1,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    name: "Em Andamento",
+                    name: "En Progreso",
                     color: "#F59E0B",
                     kanban: 1,
                     timeLane: 30,
                     nextLaneId: null,
-                    greetingMessageLane: "Seu atendimento está em andamento. Um atendente já está cuidando do seu caso.",
+                    greetingMessageLane: "Su atención está en curso. Un agente ya se está encargando de su caso.",
                     rollbackLaneId: null,
                     companyId: 1,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    name: "Aguardando Cliente",
+                    name: "Esperando Cliente",
                     color: "#8B5CF6",
                     kanban: 2,
                     timeLane: 60,
                     nextLaneId: null,
-                    greetingMessageLane: "Estamos aguardando seu retorno para continuar o atendimento.",
+                    greetingMessageLane: "Estamos esperando su retorno para continuar con la atención.",
                     rollbackLaneId: null,
                     companyId: 1,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    name: "Concluído",
+                    name: "Concluido",
                     color: "#10B981",
                     kanban: 3,
                     timeLane: 0,
                     nextLaneId: null,
-                    greetingMessageLane: "Seu atendimento foi concluído. Obrigado pelo contato!",
+                    greetingMessageLane: "¡Su atención ha concluido. Gracias por contactarnos!",
                     rollbackLaneId: null,
                     companyId: 1,
                     createdAt: new Date(),
@@ -155,7 +155,7 @@ module.exports = {
             await queryInterface.sequelize.query(`DELETE FROM "Tags"
          WHERE "companyId" = 1
            AND "kanban" IS NOT NULL
-           AND "name" IN ('Novo', 'Em Andamento', 'Aguardando Cliente', 'Concluído')`, { transaction: t });
+           AND "name" IN ('Nuevo', 'En Progreso', 'Esperando Cliente', 'Concluido')`, { transaction: t });
             console.log("✓ Tags Kanban removidas (rollback completo)");
             // Nota: TicketTags associados são removidos automaticamente via CASCADE
         });

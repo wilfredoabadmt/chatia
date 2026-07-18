@@ -21,6 +21,8 @@ import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 import CreateMessageService from "../services/MessageServices/CreateMessageService";
 import { sendFacebookMessageMedia } from "../services/FacebookServices/sendFacebookMessageMedia";
 import sendFaceMessage from "../services/FacebookServices/sendFacebookMessage";
+import { sendWhatsAppCloudMessage } from "../services/WhatsAppCloudServices/sendWhatsAppCloudMessage";
+import { sendWhatsAppCloudMessageMedia } from "../services/WhatsAppCloudServices/sendWhatsAppCloudMessageMedia";
 import ShowPlanCompanyService from "../services/CompanyService/ShowPlanCompanyService";
 import ListMessagesServiceAll from "../services/MessageServices/ListMessagesServiceAll";
 import ShowContactService from "../services/ContactServices/ShowContactService";
@@ -856,6 +858,35 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
             });
           }
 
+          if (ticket.channel === "waba") {
+            try {
+              const sentMedia = await sendWhatsAppCloudMessageMedia({
+                media,
+                ticket,
+                body: Array.isArray(body) ? body[index] : body,
+              });
+
+              const messageData = {
+                wid: sentMedia.messages[0].id,
+                ticketId: ticket.id,
+                contactId: undefined,
+                body: (Array.isArray(body) ? body[index] : body) || media.filename,
+                fromMe: true,
+                mediaType: media.mimetype.startsWith("image/") ? "image" : media.mimetype.startsWith("video/") ? "video" : media.mimetype.startsWith("audio/") ? "audio" : "document",
+                mediaUrl: media.filename,
+                read: true,
+                quotedMsgId: null,
+                ack: 1,
+                dataJson: JSON.stringify(sentMedia),
+                channel: "waba"
+              };
+
+              await CreateMessageService({ messageData, companyId: ticket.companyId });
+            } catch (error) {
+              console.error("Erro ao enviar mídia para WhatsApp Cloud:", error);
+            }
+          }
+
           if (["facebook", "instagram"].includes(ticket.channel)) {
             try {
               const sentMedia = await sendFacebookMessageMedia({
@@ -881,7 +912,25 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     } else {
       if (ticket.channel === "whatsapp" && isPrivate === "false") {
         await SendWhatsAppMessage({ body, ticket, quotedMsg, vCard });
-      } else if (ticket.channel === "whatsapp" && isPrivate === "true") {
+      } else if (ticket.channel === "waba" && isPrivate === "false") {
+        const sentMsg = await sendWhatsAppCloudMessage({ body, ticket });
+
+        const messageData = {
+          wid: sentMsg.messages[0].id,
+          ticketId: ticket.id,
+          contactId: undefined,
+          body,
+          fromMe: true,
+          mediaType: "extendedTextMessage",
+          read: true,
+          quotedMsgId: null,
+          ack: 1,
+          dataJson: JSON.stringify(sentMsg),
+          channel: "waba"
+        };
+
+        await CreateMessageService({ messageData, companyId: ticket.companyId });
+      } else if ((ticket.channel === "whatsapp" || ticket.channel === "waba") && isPrivate === "true") {
         const messageData = {
           wid: `PVT${ticket.updatedAt.toString().replace(" ", "")}`,
           ticketId: ticket.id,
