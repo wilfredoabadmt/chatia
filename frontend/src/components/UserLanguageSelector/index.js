@@ -144,6 +144,7 @@ const UserLanguageSelector = () => {
   const handleChangeLanguage = async (language) => {
     try {
       await i18n.changeLanguage(language);
+      localStorage.setItem("i18nextLng", language);
       await api.put(`/users/${user.id}`, { language });
     } catch (err) {
       toastError(err);

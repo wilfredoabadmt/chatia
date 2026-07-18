@@ -159,7 +159,7 @@ const LANGUAGE_CURRENCY_MAP = {
 
 const getCurrencyByLanguage = () => {
   try {
-    const lang = localStorage.getItem('i18nextLng') || 'pt';
+    const lang = localStorage.getItem('i18nextLng') || 'es';
     const code = LANGUAGE_CURRENCY_MAP[lang] || LANGUAGE_CURRENCY_MAP[lang.substring(0, 2)] || 'USD';
     return CURRENCIES[code] || CURRENCIES.USD;
   } catch {

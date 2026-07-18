@@ -272,7 +272,7 @@ const iconStyles = {
 };
 
 // ---------------- i18n helpers ----------------
-const lang = () => (i18n?.language || "pt").split("-")[0].toLowerCase();
+const lang = () => (i18n?.language || "es").split("-")[0].toLowerCase();
 
 /**
  * tLang: tenta i18n.t(key). Se não existir, usa fallback por idioma atual.
@@ -283,7 +283,46 @@ const tLang = (key, pt, en) => {
     const v = i18n.t(key);
     if (v && v !== key) return v;
   } catch (_) {}
-  return lang() === "en" ? en : pt;
+  
+  const currentLang = lang();
+  if (currentLang === "en") return en;
+  if (currentLang === "es") {
+    const esFallback = {
+      "Gerência": "Gerencia",
+      "Dashboard": "Dashboard",
+      "Relatórios": "Informes",
+      "Painel": "Panel",
+      "Atendimentos": "Atenciones",
+      "Respostas rápidas": "Respuestas rápidas",
+      "Kanban": "Kanban",
+      "Contatos": "Contactos",
+      "Agendamentos": "Programaciones",
+      "Tags": "Etiquetas",
+      "Chat Interno": "Chat Interno",
+      "Ajuda": "Ayuda",
+      "Administração": "Administración",
+      "Campanhas": "Campañas",
+      "Listagem": "Lista",
+      "Lista de contatos": "Lista de contactos",
+      "Configurações": "Configuraciones",
+      "Flowbuilder": "Flowbuilder",
+      "Campaign Flow": "Flujo de campaña",
+      "Conversation Flow": "Flujo de conversación",
+      "Informativos": "Comunicados",
+      "API": "API",
+      "Usuários": "Usuarios",
+      "Filas": "Colas",
+      "Prompts": "Prompts",
+      "Integrações": "Integraciones",
+      "Conexões": "Conexiones",
+      "Gerenciar conexões": "Administrar conexiones",
+      "Arquivos": "Archivos",
+      "Financeiro": "Financiero",
+      "Empresas": "Empresas"
+    };
+    return esFallback[pt] || pt;
+  }
+  return pt;
 };
 
 // ---------------- theme helpers ----------------

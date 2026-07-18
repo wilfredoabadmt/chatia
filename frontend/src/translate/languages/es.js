@@ -214,11 +214,11 @@ const messages = {
         charts: {
           performance: "Gráficos",
           userPerformance: "Gráfico de Usuarios",
-          hourlyServices: "Atendimientos por hora",
+          hourlyServices: "Atenciones por hora",
           ticketsLabel: "Tickets",
           score: "Puntuación",
           perDay: {
-            title: "Atendimientos hoy: "
+            title: "Atenciones hoy: "
           },
           errorFetchingTickets: "Error al buscar información de los tickets",
           noDataAvailable: "No hay datos disponibles para el período seleccionado.",
@@ -240,11 +240,11 @@ const messages = {
         },
         users: {
           name: "Nombre",
-          numberAppointments: "Cantidad de Atendimientos",
+          numberAppointments: "Cantidad de Atenciones",
           statusNow: "Actual",
-          totalCallsUser: "Total de atendimientos por usuario",
-          totalAttendances: "Total de atendimientos",
-          totalLabel: "Total de atendimientos: {{count}}",
+          totalCallsUser: "Total de atenciones por usuario",
+          totalAttendances: "Total de atenciones",
+          totalLabel: "Total de atenciones: {{count}}",
           queues: "Colas",
           defaultQueue: "Conexión Predeterminada",
           workingHours: "Horario Laboral",
@@ -262,10 +262,10 @@ const messages = {
           available: "Disponible hasta"
         },
         assessments: {
-          totalCalls: "Total de Atendimientos",
-          callsWaitRating: "Atendimientos esperando evaluación",
-          callsWithoutRating: "Atendimientos sin evaluación",
-          ratedCalls: "Atendimientos evaluados",
+          totalCalls: "Total de Atenciones",
+          callsWaitRating: "Atenciones esperando evaluación",
+          callsWithoutRating: "Atenciones sin evaluación",
+          ratedCalls: "Atenciones evaluados",
           evaluationIndex: "Índice de evaluación",
           score: "Puntuación",
           prosecutors: "Promotores",
@@ -302,16 +302,16 @@ const messages = {
         until: "Hasta",
         date: "Fecha",
         reportTitle: "Informes",
-        calls: "Atendimientos",
+        calls: "Atenciones",
         search: "Encuestas",
-        durationCalls: "Duración de los Atendimientos",
-        grupoSessions: "Atendimientos en Grupos",
+        durationCalls: "Duración de los Atenciones",
+        grupoSessions: "Atenciones en Grupos",
         groupTicketsReports: {
           timezone: "America/Sao_Paulo",
           msgToast: "Generando informe comprimido, por favor espere.",
           errorToast: "Error al generar el informe",
           back: "Volver",
-          groupServiceReport: "Informe de Atendimientos en Grupos",
+          groupServiceReport: "Informe de Atenciones en Grupos",
           loading: "Cargando...",
           contact: "Contacto",
           dateOpen: "Fecha de Apertura",
@@ -333,14 +333,14 @@ const messages = {
         },
         ticketDurationDetail: {
           msgToast: "Generando informe comprimido, por favor espere.",
-          title: "Informe de Duración del Atendimiento",
-          startService: "Inicio del Atendimiento",
+          title: "Informe de Duración del Atención",
+          startService: "Inicio del Atención",
           lastUpdated: "Última Actualización",
           lastAgent: "Último Agente",
           durationFinished: "Duración después de finalizado"
         },
         ticketDuration: {
-          title: "Informe de Duración de los Atendimientos",
+          title: "Informe de Duración de los Atenciones",
           contact: "Contacto",
           open: "Abiertos",
           pending: "Pendientes",
@@ -351,11 +351,11 @@ const messages = {
         },
         ticketReports: {
           msgToast: "Generando informe comprimido, por favor espere.",
-          title: "Informe de Atendimientos"
+          title: "Informe de Atenciones"
         },
         pdf: {
-          title: "Relación de Atendimientos Realizados",
-          exportTitle: "Relación de Atendimientos en Grupos Realizados"
+          title: "Relación de Atenciones Realizados",
+          exportTitle: "Relación de Atenciones en Grupos Realizados"
         },
         form: {
           initialDate: "Fecha Inicial",
@@ -552,13 +552,13 @@ const messages = {
       },
       showTicketOpenModal: {
         title: {
-          header: "Atendimiento Existente"
+          header: "Atención Existente"
         },
         form: {
-          message: "Este contacto ya está en atendimiento:",
+          message: "Este contacto ya está en atención:",
           user: "Agente",
           queue: "Cola",
-          messageWait: "Este contacto ya está esperando atendimiento. ¡Ve en la pestaña Esperando!",
+          messageWait: "Este contacto ya está esperando atención. ¡Ve en la pestaña Esperando!",
           ticketId: "ID del Ticket",
           status: "Estado",
           createdAt: "Creado en",
@@ -583,7 +583,7 @@ const messages = {
           create: "Ticket creado.",
           chatBot: "ChatBot iniciado.",
           queue: " - Cola definida.",
-          open: " inició el atendimiento.",
+          open: " inició el atención.",
           access: "accedió al ticket.",
           transfered: "transfirió el ticket.",
           receivedTransfer: "recibió el ticket transferido.",
@@ -704,7 +704,7 @@ const messages = {
           deleteTitle: "Eliminar ",
           importTitlte: "Importar contactos",
           exportContact: "Exportar contactos",
-          deleteMessage: "¿Estás seguro de que deseas eliminar este contacto? Todos los atendimientos relacionados se perderán.",
+          deleteMessage: "¿Estás seguro de que deseas eliminar este contacto? Todos los atenciones relacionados se perderán.",
           blockContact: "¿Estás seguro de que deseas bloquear este contacto?",
           unblockContact: "¿Estás seguro de que deseas desbloquear este contacto?",
           importMessage: "¿Desea importar todos los contactos del teléfono?",
@@ -1160,7 +1160,7 @@ const messages = {
           allUserChat: "Ver conversaciones de otros usuarios",
           userClosePendingTicket: "Permitir cerrar tickets pendientes",
           showDashboard: "Ver Dashboard",
-          allowRealTime: "Ver Panel de Atendimientos",
+          allowRealTime: "Ver Panel de Atenciones",
           allowConnections: "Permitir acciones en las conexiones"
         },
         tabs: {
@@ -1287,7 +1287,7 @@ const messages = {
           timeLane: "Tiempo en horas para redirigir a la columna",
           nextLaneId: "Columna",
           greetingMessageLane: "Mensaje de bienvenida de la columna",
-          rollbackLaneId: "Volver a la Columna después de retomar el atendimiento"
+          rollbackLaneId: "Volver a la Columna después de retomar el atención"
         },
         buttons: {
           okAdd: "Agregar",
@@ -1390,7 +1390,7 @@ const messages = {
           resolverd: "Resueltos"
         },
         toasts: {
-          deleted: "El atendimiento que estabas fue eliminado."
+          deleted: "La atención en la que estabas fue eliminada."
         },
         notification: {
           message: "Mensaje de"
@@ -1407,7 +1407,7 @@ const messages = {
           }
         },
         search: {
-          placeholder: "Buscar atendimiento y mensajes",
+          placeholder: "Buscar atención y mensajes",
           filterConections: "Filtrar por Conexión",
           filterConectionsOptions: {
             open: "Abierto",
@@ -1509,7 +1509,7 @@ const messages = {
         assignedHeader: "Atendiendo",
         groupingHeader: "Grupos",
         noTicketsTitle: "¡Nada aquí!",
-        noTicketsMessage: "Ningún atendimiento encontrado con este estado o término buscado",
+        noTicketsMessage: "Ningún atención encontrado con este estado o término buscado",
         noQueue: "Sin Cola",
         buttons: {
           accept: "Aceptar",
@@ -1562,7 +1562,7 @@ const messages = {
           dashboard: "Dashboard",
           connections: "Conexiones",
           chatsTempoReal: "Panel",
-          tickets: "Atendimientos",
+          tickets: "Atenciones",
           quickMessages: "Respuestas rápidas",
           contacts: "Contactos",
           queues: "Colas & Chatbot",
@@ -1597,7 +1597,7 @@ const messages = {
             active: "Activo hasta",
             goodMorning: "Hola,",
             myName: "mi nombre es",
-            continuity: "y daré continuidad en tu atendimiento.",
+            continuity: "y daré continuidad en tu atención.",
             virtualAssistant: "Asistente Virtual",
             token: "Token inválido, por favor entra en contacto con el administrador de la plataforma."
           },
@@ -2088,7 +2088,7 @@ const messages = {
         }
       },
       reports: {
-        title: "Informes de Atendimientos",
+        title: "Informes de Atenciones",
         table: {
           id: "Ticket",
           user: "Usuario",
@@ -2101,7 +2101,7 @@ const messages = {
           actions: "Acciones",
           lastMessage: "Últ. Mensaje",
           contact: "Cliente",
-          supportTime: "Tiempo de Atendimiento"
+          supportTime: "Tiempo de Atención"
         },
         buttons: {
           filter: "Aplicar Filtro",
@@ -2167,7 +2167,7 @@ const messages = {
         },
         confirmationModal: {
           deleteTitle: "Excluir",
-          deleteMessage: "Todos los datos del usuario se perderán. Los atendimientos abiertos de este usuario se moverán para la cola."
+          deleteMessage: "Todos los datos del usuario se perderán. Los atenciones abiertos de este usuario se moverán para la cola."
         }
       },
       compaies: {
@@ -2527,8 +2527,8 @@ const messages = {
       messagesList: {
         header: {
           assignedTo: "Atribuído a:",
-          dialogRatingTitle: "¿Desea dejar una evaluación de atendimiento para el cliente?",
-          dialogClosingTitle: "¡Finalizando el atendimiento con el cliente!",
+          dialogRatingTitle: "¿Desea dejar una evaluación de atención para el cliente?",
+          dialogClosingTitle: "¡Finalizando el atención con el cliente!",
           dialogRatingCancel: "Resolver CON Mensaje de Despedida",
           dialogRatingSuccess: "Resolver y Enviar Evaluación",
           dialogRatingWithoutFarewellMsg: "Resolver SIN Mensaje de Despedida",

@@ -484,7 +484,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const lang = localStorage.getItem("i18nextLng") || "pt";
+    const lang = localStorage.getItem("i18nextLng") || "es";
     i18n.changeLanguage(lang);
     handleLogin(user);
   };

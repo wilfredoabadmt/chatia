@@ -238,7 +238,7 @@ const ForgotPassword = () => {
     { code: "ar", flag: "/flags/sa.png", name: "العربية" },
   ];
 
-  const currentLanguage = localStorage.getItem("i18nextLng") || "pt";
+  const currentLanguage = localStorage.getItem("i18nextLng") || "es";
   const selectedLanguage = languageOptions.find(lang => lang.code === currentLanguage) || languageOptions[0];
 
   // Logo selection function
