@@ -57,48 +57,48 @@ module.exports = {
         "Tags",
         [
           {
-            name: "Novo",
+            name: "Nuevo",
             color: "#3B82F6", // Azul (novo/recebido)
             kanban: 0, // Primeira lane
             timeLane: 0, // Sem tempo automático
             nextLaneId: null, // Será atualizado após inserção
-            greetingMessageLane: "Olá! Seu atendimento foi recebido e será iniciado em breve.",
+            greetingMessageLane: "¡Hola! Su atención ha sido recibida y se iniciará pronto.",
             rollbackLaneId: 0,
             companyId: 1,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
           {
-            name: "Em Andamento",
+            name: "En Progreso",
             color: "#F59E0B", // Amarelo/Laranja (em progresso)
             kanban: 1, // Segunda lane
             timeLane: 30, // Avançar automaticamente após 30 minutos (se configurado)
             nextLaneId: null, // Será atualizado após inserção
-            greetingMessageLane: "Seu atendimento está em andamento. Um atendente já está cuidando do seu caso.",
+            greetingMessageLane: "Su atención está en curso. Un agente ya se está encargando de su caso.",
             rollbackLaneId: null, // Voltar para "Novo" se necessário (será atualizado)
             companyId: 1,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
           {
-            name: "Aguardando Cliente",
+            name: "Esperando Cliente",
             color: "#8B5CF6", // Roxo (aguardando resposta)
             kanban: 2, // Terceira lane
             timeLane: 60, // Avançar após 60 minutos sem resposta
             nextLaneId: null, // Será atualizado após inserção
-            greetingMessageLane: "Estamos aguardando seu retorno para continuar o atendimento.",
+            greetingMessageLane: "Estamos esperando su retorno para continuar con la atención.",
             rollbackLaneId: null, // Voltar para "Em Andamento" se cliente responder
             companyId: 1,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
           {
-            name: "Concluído",
+            name: "Concluido",
             color: "#10B981", // Verde (finalizado)
             kanban: 3, // Quarta lane (última)
             timeLane: 0, // Sem avanço automático (lane final)
             nextLaneId: null, // Null = lane final
-            greetingMessageLane: "Seu atendimento foi concluído. Obrigado pelo contato!",
+            greetingMessageLane: "¡Su atención ha concluido. Gracias por contactarnos!",
             rollbackLaneId: null, // Pode voltar para "Em Andamento" se reabrir
             companyId: 1,
             createdAt: new Date(),
@@ -200,7 +200,7 @@ module.exports = {
         `DELETE FROM "Tags"
          WHERE "companyId" = 1
            AND "kanban" IS NOT NULL
-           AND "name" IN ('Novo', 'Em Andamento', 'Aguardando Cliente', 'Concluído')`,
+           AND "name" IN ('Nuevo', 'En Progreso', 'Esperando Cliente', 'Concluido')`,
         { transaction: t }
       );
 

@@ -142,7 +142,6 @@ const MessagesAPI = () => {
                   as={TextField}
                   label={i18n.t("messagesAPI.textMessage.number")}
                   name="number"
-                  autoFocus
                   variant="outlined"
                   margin="dense"
                   fullWidth
@@ -155,7 +154,6 @@ const MessagesAPI = () => {
                   as={TextField}
                   label={i18n.t("messagesAPI.textMessage.body")}
                   name="body"
-                  autoFocus
                   variant="outlined"
                   margin="dense"
                   fullWidth
@@ -168,7 +166,6 @@ const MessagesAPI = () => {
                   as={TextField}
                   label={i18n.t("messagesAPI.textMessage.userId")}
                   name="userId"
-                  autoFocus
                   variant="outlined"
                   margin="dense"
                   fullWidth
@@ -180,7 +177,6 @@ const MessagesAPI = () => {
                   as={TextField}
                   label={i18n.t("messagesAPI.textMessage.queueId")}
                   name="queueId"
-                  autoFocus
                   variant="outlined"
                   margin="dense"
                   fullWidth
