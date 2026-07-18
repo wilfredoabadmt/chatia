@@ -267,7 +267,7 @@ const SignUp = () => {
     { code: "ar", shortCode: "ar", flag: "/flags/sa.png", name: "العربية" },
   ];
 
-  const currentLanguage = localStorage.getItem("i18nextLng") || "pt-BR";
+  const currentLanguage = localStorage.getItem("i18nextLng") || "es";
   const selectedLanguage = languageOptions.find(
     lang => lang.code === currentLanguage || lang.shortCode === currentLanguage
   ) || languageOptions[0];
