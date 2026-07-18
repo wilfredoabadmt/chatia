@@ -1842,6 +1842,7 @@ const messages = {
         },
       },
       settings: {
+        currency: "العملة",
         LGPD: {
           title: "LGPD",
           welcome: "رسالة ترحيب (LGPD)",

@@ -2431,6 +2431,7 @@ const messages = {
       },
       settings: {
         success: "Settings saved successfully.",
+        currency: "Currency",
         title: "Settings",
         tabs: {
           options: "Options",

@@ -2378,6 +2378,7 @@ const messages = {
       },
       settings: {
         success: "Ayarlar başarıyla kaydedildi.",
+        currency: "Para Birimi",
         title: "Ayarlar",
         tabs: {
           options: "Seçenekler",
@@ -2450,6 +2451,7 @@ const messages = {
             enabled: "Etkin",
             disabled: "Devre Dışı",
           },
+        },
         tabs: {
           schedules: "Programlar",
           companies: "Şirketler",
@@ -2551,7 +2553,6 @@ const messages = {
             title: "Başlık",
             video: "Video",
           },
-        },
         },
       },
       messagesList: {

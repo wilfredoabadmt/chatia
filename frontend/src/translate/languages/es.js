@@ -2359,6 +2359,7 @@ const messages = {
       },
       settings: {
         success: "Configuraciones guardadas con éxito.",
+        currency: "Moneda",
         title: "Configuraciones",
         tabs: {
           options: "Opciones",
@@ -2427,6 +2428,7 @@ const messages = {
             enabled: "Habilitado",
             disabled: "Deshabilitado"
           },
+        },
         tabs: {
           schedules: "Horarios",
           companies: "Empresas",
@@ -2484,7 +2486,6 @@ const messages = {
             title: "Título",
             video: "Video",
           },
-        },
         },
         timezone: {
           companyTimezone: {
