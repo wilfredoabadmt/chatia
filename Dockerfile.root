@@ -2,14 +2,19 @@
 
 # ==========================================
 # STAGE 1: Install production deps ONLY
-# --ignore-scripts prevents puppeteer from downloading Chromium (~170MB)
-# and @ffmpeg-installer/ffmpeg / ffmpeg-static from downloading extra
-# ffmpeg binaries (~200MB total). System ffmpeg is used instead via FFMPEG_PATH.
+# - npm ci: deterministic, faster than npm install
+# - --ignore-scripts: prevents puppeteer from downloading Chromium (~170MB)
+#   and @ffmpeg-installer/ffmpeg / ffmpeg-static from downloading extra
+#   ffmpeg binaries (~200MB total). System ffmpeg is used via FFMPEG_PATH.
+# - BuildKit cache mount: reuses npm cache across builds
 # ==========================================
 FROM node:22-alpine AS backend-deps
 WORKDIR /app
-COPY backend/package*.json ./
-RUN NODE_OPTIONS="--max-old-space-size=384" npm install --no-audit --no-fund --loglevel error --legacy-peer-deps --omit=dev --ignore-scripts && npm cache clean --force
+COPY backend/package*.json backend/package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm \
+    NODE_OPTIONS="--max-old-space-size=384" \
+    npm ci --omit=dev --ignore-scripts --no-audit --no-fund && \
+    npm prune --omit=dev
 
 # ==========================================
 # STAGE 2: Final backend image (pre-compiled dist + deps + runtime packages)
