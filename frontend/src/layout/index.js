@@ -56,6 +56,7 @@ import ColorModeContext from "./themeContext";
 import { getBackendUrl } from "../config";
 import useSettings from "../hooks/useSettings";
 import VersionControl from "../components/VersionControl";
+import nopicture from "../assets/nopicture.png";
 
 // logos (fallbacks)
 const logo = "/logo-light.png";
@@ -344,7 +345,7 @@ const LoggedInLayout = ({ children }) => {
       const ImageUrl = user.profileImage;
       if (ImageUrl !== undefined && ImageUrl !== null)
         setProfileUrl(`${backendUrl}/public/avatar/${ImageUrl}`);
-      else setProfileUrl(`${process.env.FRONTEND_URL}/nopicture.png`);
+      else setProfileUrl(nopicture);
 
       const onCompanyAuthLayout = (data) => {
         if (data.user.id === +userId) {
