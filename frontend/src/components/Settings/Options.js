@@ -101,22 +101,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     padding: '10px 16px',
     borderRadius: 10,
-    border: '1px solid #e0e0e0',
+    border: theme.mode === 'light' ? '1px solid #e0e0e0' : '1px solid rgba(255, 255, 255, 0.23)',
+    backgroundColor: theme.mode === 'light' ? '#fff' : theme.palette.background.paper,
     marginBottom: 4,
     transition: 'all 0.2s ease',
     '&:hover': {
-      backgroundColor: '#f5f5f5',
-      borderColor: '#bdbdbd',
+      backgroundColor: theme.mode === 'light' ? '#f5f5f5' : 'rgba(255, 255, 255, 0.08)',
+      borderColor: theme.mode === 'light' ? '#bdbdbd' : 'rgba(255, 255, 255, 0.5)',
     },
   },
   toggleLabel: {
     fontSize: '0.9rem',
-    color: '#424242',
+    color: theme.palette.text.primary,
     fontWeight: 500,
   },
   toggleHelper: {
     fontSize: '0.75rem',
-    color: '#999',
+    color: theme.palette.text.secondary,
     marginTop: 2,
   },
 }));
@@ -637,7 +638,7 @@ export default function Options(props) {
               value={scheduleType}
               onChange={async (e) => { handleScheduleType(e.target.value); }}
               disableUnderline
-              style={{ fontSize: '0.85rem', fontWeight: 500 }}
+              style={{ fontSize: '0.85rem', fontWeight: 500, color: 'inherit' }}
             >
               <MenuItem value={"disabled"}>{i18n.t("settings.settingsConfig.options.disabled")}</MenuItem>
               <MenuItem value={"queue"}>{i18n.t("settings.settingsConfig.options.queueManagement")}</MenuItem>
