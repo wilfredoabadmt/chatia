@@ -146,20 +146,25 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		padding: '10px 16px',
+		padding: '10px 14px',
 		borderRadius: 10,
-		border: '1px solid #e0e0e0',
-		marginBottom: 4,
+		border: theme.mode === 'light' ? '1px solid #e0e0e0' : '1px solid rgba(255, 255, 255, 0.23)',
+		backgroundColor: theme.mode === 'light' ? '#fff' : theme.palette.background.paper,
+		marginBottom: 8,
+		minHeight: 52,
+		boxSizing: 'border-box',
 		transition: 'all 0.2s ease',
 		'&:hover': {
-			backgroundColor: '#f5f5f5',
-			borderColor: '#bdbdbd',
+			backgroundColor: theme.mode === 'light' ? '#f5f5f5' : 'rgba(255, 255, 255, 0.08)',
+			borderColor: theme.mode === 'light' ? '#bdbdbd' : 'rgba(255, 255, 255, 0.5)',
 		},
 	},
 	permissionLabel: {
-		fontSize: '0.9rem',
-		color: '#424242',
+		fontSize: '0.85rem',
+		color: theme.palette.text.primary,
 		fontWeight: 500,
+		marginRight: 8,
+		wordBreak: 'break-word',
 	},
 }));
 
@@ -654,7 +659,7 @@ const UserModal = ({ open, onClose, userId }) => {
 											role={loggedInUser.profile}
 											perform="user-modal:editProfile"
 											yes={() =>
-												<Grid container spacing={1}>
+												<Grid container spacing={2}>
 													{[
 														{ name: "canViewAllContacts", label: i18n.t("userModal.form.canViewAllContacts"), isBoolean: true },
 														{ name: "allTicket", label: i18n.t("userModal.form.allTicket"), onValue: "enable", offValue: "disable" },
@@ -666,7 +671,7 @@ const UserModal = ({ open, onClose, userId }) => {
 														{ name: "showDashboard", label: i18n.t("userModal.form.showDashboard"), onValue: "enabled", offValue: "disabled" },
 														{ name: "allowRealTime", label: i18n.t("userModal.form.allowRealTime"), onValue: "enabled", offValue: "disabled" },
 													].map((perm) => (
-														<Grid item xs={12} md={6} key={perm.name}>
+														<Grid item xs={12} sm={6} key={perm.name}>
 															<Field name={perm.name}>
 																{({ field, form }) => {
 																	const isOn = perm.isBoolean

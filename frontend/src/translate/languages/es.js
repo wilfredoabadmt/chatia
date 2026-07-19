@@ -1135,6 +1135,7 @@ const messages = {
           removeImage: "Eliminar imagen"
         },
         form: {
+          canViewAllContacts: "Ver todos los contactos",
           name: "Nombre",
           none: "Ninguna",
           email: "Correo electrónico",
