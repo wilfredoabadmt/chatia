@@ -35,6 +35,7 @@ const ListSettingsServiceOne_1 = __importDefault(require("../services/SettingSer
 const GetSettingService_1 = __importDefault(require("../services/SettingServices/GetSettingService"));
 const UpdateOneSettingService_1 = __importDefault(require("../services/SettingServices/UpdateOneSettingService"));
 const GetPublicSettingService_1 = __importDefault(require("../services/SettingServices/GetPublicSettingService"));
+const User_1 = __importDefault(require("../models/User"));
 const index = async (req, res) => {
     const { companyId } = req.user;
     // if (req.user.profile !== "admin") {
@@ -55,7 +56,8 @@ const showOne = async (req, res) => {
 };
 exports.showOne = showOne;
 const update = async (req, res) => {
-    if (req.user.profile !== "admin") {
+    const requestUser = await User_1.default.findByPk(req.user.id);
+    if (req.user.profile !== "admin" && !requestUser?.super) {
         throw new AppError_1.default("ERR_NO_PERMISSION", 403);
     }
     const { settingKey: key } = req.params;

@@ -10,6 +10,8 @@ import GetSettingService from "../services/SettingServices/GetSettingService";
 import UpdateOneSettingService from "../services/SettingServices/UpdateOneSettingService";
 import GetPublicSettingService from "../services/SettingServices/GetPublicSettingService";
 
+import User from "../models/User";
+
 type LogoRequest = {
   mode: string;
 };
@@ -49,7 +51,8 @@ export const update = async (
   res: Response
 ): Promise<Response> => {
 
-  if (req.user.profile !== "admin") {
+  const requestUser = await User.findByPk(req.user.id);
+  if (req.user.profile !== "admin" && !requestUser?.super) {
     throw new AppError("ERR_NO_PERMISSION", 403);
   }
 

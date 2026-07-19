@@ -216,7 +216,14 @@ export default function Options(props) {
 
   const { update: updateUserCreation, getAll } = useSettings();
 
-  const { update } = useCompanySettings();
+  const { update: rawUpdateCompanySetting } = useCompanySettings();
+
+  const update = async (params) => {
+    if (params && params.column && settings && typeof settings === "object") {
+      settings[params.column] = params.data;
+    }
+    return await rawUpdateCompanySetting(params);
+  };
 
   const isSuper = () => {
     return user.super;
@@ -272,6 +279,14 @@ export default function Options(props) {
 
   async function handleChangeUserCreation(value) {
     setUserCreation(value);
+    if (Array.isArray(oldSettings)) {
+      const userPar = oldSettings.find((s) => s.key === "userCreation");
+      if (userPar) {
+        userPar.value = value;
+      } else {
+        oldSettings.push({ key: "userCreation", value });
+      }
+    }
     setLoadingUserCreation(true);
     await updateUserCreation({
       key: "userCreation",

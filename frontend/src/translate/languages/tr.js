@@ -2397,12 +2397,6 @@ const messages = {
               disabled: "Devre Dışı",
             },
           },
-          tabs: {
-            options: "Seçenekler",
-            schedules: "Randevular",
-            plans: "Planlar",
-            help: "Yardım",
-          },
           options: {
             disabled: "Devre Dışı",
             enabled: "Etkin",
@@ -2451,11 +2445,6 @@ const messages = {
             enabled: "Etkin",
             disabled: "Devre Dışı",
           },
-        },
-        tabs: {
-          schedules: "Programlar",
-          companies: "Şirketler",
-          whitelabel: "Beyaz Etiket",
         },
         toasts: {
           schedulesSavedSuccess: "Programlar başarıyla güncellendi.",

@@ -2367,22 +2367,16 @@ const messages = {
           companies: "Empresas",
           plans: "Planes",
           helps: "Ayuda",
-          whitelabel: "Whitelabel",
+          whitelabel: "Marca Blanca",
           timezone: "Zona Horaria"
         },
         settingsConfig: {
           userCreation: {
-            name: "Creação de usuário",
+            name: "Creación de usuario",
             options: {
               enabled: "Activado",
               disabled: "Desactivado"
             }
-          },
-          tabs: {
-            options: "Opciones",
-            schedules: "Horarios",
-            plans: "Planes",
-            help: "Ayuda"
           },
           options: {
             disabled: "Deshabilitado",
@@ -2428,11 +2422,6 @@ const messages = {
             enabled: "Habilitado",
             disabled: "Deshabilitado"
           },
-        },
-        tabs: {
-          schedules: "Horarios",
-          companies: "Empresas",
-          whitelabel: "Marca Blanca",
         },
         toasts: {
           schedulesSavedSuccess: "Horarios actualizados con éxito.",
