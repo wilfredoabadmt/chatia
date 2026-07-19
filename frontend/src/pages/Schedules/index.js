@@ -47,48 +47,55 @@ const eventTitleStyle = {
 
 const localizer = momentLocalizer(moment);
 
-const reducer = (state, action) => {
+const reducer = (state = [], action) => {
   if (action.type === "LOAD_SCHEDULES") {
-    const schedules = action.payload;
+    const schedules = action.payload || [];
     const newSchedules = [];
 
-    schedules.forEach((schedule) => {
-      const scheduleIndex = state.findIndex((s) => s.id === schedule.id);
-      if (scheduleIndex !== -1) {
-        state[scheduleIndex] = schedule;
-      } else {
-        newSchedules.push(schedule);
-      }
-    });
-
-    return [...state, ...newSchedules];
+    if (Array.isArray(schedules) && Array.isArray(state)) {
+      schedules.forEach((schedule) => {
+        const scheduleIndex = state.findIndex((s) => s.id === schedule.id);
+        if (scheduleIndex !== -1) {
+          state[scheduleIndex] = schedule;
+        } else {
+          newSchedules.push(schedule);
+        }
+      });
+      return [...state, ...newSchedules];
+    }
+    return Array.isArray(schedules) ? schedules : state;
   }
 
   if (action.type === "UPDATE_SCHEDULES") {
     const schedule = action.payload;
-    const scheduleIndex = state.findIndex((s) => s.id === schedule.id);
+    if (!schedule) return state;
+    const currentState = Array.isArray(state) ? state : [];
+    const scheduleIndex = currentState.findIndex((s) => s.id === schedule.id);
 
     if (scheduleIndex !== -1) {
-      state[scheduleIndex] = schedule;
-      return [...state];
+      currentState[scheduleIndex] = schedule;
+      return [...currentState];
     } else {
-      return [schedule, ...state];
+      return [schedule, ...currentState];
     }
   }
 
   if (action.type === "DELETE_SCHEDULE") {
     const scheduleId = action.payload;
+    const currentState = Array.isArray(state) ? state : [];
 
-    const scheduleIndex = state.findIndex((s) => s.id === scheduleId);
+    const scheduleIndex = currentState.findIndex((s) => s.id === scheduleId);
     if (scheduleIndex !== -1) {
-      state.splice(scheduleIndex, 1);
+      currentState.splice(scheduleIndex, 1);
     }
-    return [...state];
+    return [...currentState];
   }
 
   if (action.type === "RESET") {
     return [];
   }
+
+  return Array.isArray(state) ? state : [];
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -166,13 +173,17 @@ const Schedules = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const companyId = user.companyId;
-      const planConfigs = await getPlanCompany(undefined, companyId);
-      if (!planConfigs || !planConfigs.plan || !planConfigs.plan.useSchedules) {
-        toast.error(i18n.t("scheduleModal.permissions.noAccess"));
-        setTimeout(() => {
-          history.push(`/`)
-        }, 1000);
+      try {
+        const companyId = user.companyId;
+        const planConfigs = await getPlanCompany(undefined, companyId);
+        if (planConfigs && planConfigs.plan && planConfigs.plan.useSchedules === false) {
+          toast.error(i18n.t("scheduleModal.permissions.noAccess"));
+          setTimeout(() => {
+            history.push(`/`);
+          }, 1000);
+        }
+      } catch (e) {
+        // do not block if plan service fails
       }
     }
     fetchData();
@@ -188,6 +199,7 @@ const Schedules = () => {
       setHasMore(data.hasMore);
       setLoading(false);
     } catch (err) {
+      setLoading(false);
       toastError(err);
     }
   }, [searchParam, pageNumber]);
