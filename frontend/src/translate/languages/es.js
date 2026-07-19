@@ -2336,6 +2336,31 @@ const messages = {
           deleted: "Columna eliminada con éxito."
         }
       },
+      campaignsPhrase: {
+        title: "Listas de Frases",
+        addCampaign: "Nueva Lista de Frases",
+        table: {
+          name: "Nombre",
+          status: "Estado",
+          active: "Activo",
+          inactive: "Inactivo",
+          empty: "No se encontraron listas de frases"
+        },
+        modal: {
+          newTitle: "Nueva Lista de Frases",
+          editTitle: "Editar Lista de Frases",
+          nameLabel: "Nombre de la Lista",
+          flowLabel: "Flujo a Ejecutar",
+          flowPlaceholder: "Seleccione un flujo...",
+          connectionPlaceholder: "Seleccione una conexión...",
+          phraseLabel: "Palabra o Frase Clave",
+          matchTypeLabel: "Tipo de Coincidencia",
+          matchTypeExact: "Coincidencia Exacta (mensaje idéntico a la frase)",
+          matchTypeContains: "Contiene la Frase (si el mensaje contiene la palabra clave)",
+          matchTypeTooltip: "Define cómo se activará el flujo cuando el cliente envíe un mensaje",
+          statusLabel: "Estado Activo"
+        }
+      },
       files: {
         title: "Lista de archivos",
         table: {
@@ -2393,14 +2418,14 @@ const messages = {
             sendMsgTransfTicket: "Enviar mensaje transferencia de sector/agente",
             checkMsgIsGroup: "Ignorar Mensajes de Grupos",
             chatBotType: "Tipo del Bot",
-            userRandom: "Escolher atendente aleatório",
+            userRandom: "Elegir agente aleatorio",
             buttons: "Botones",
-            acceptCallWhatsapp: "Informar que no acepta llamadas en whatsapp?",
-            sendSignMessage: "Permite atendente escolher ENVIAR Assinatura",
-            sendGreetingMessageOneQueues: "Enviar saludo cuando haya solamente 1 fila",
+            acceptCallWhatsapp: "¿Informar que no acepta llamadas en WhatsApp?",
+            sendSignMessage: "Permitir al agente elegir ENVIAR Firma",
+            sendGreetingMessageOneQueues: "Enviar saludo cuando haya solamente 1 cola",
             sendQueuePosition: "Enviar mensaje con la posición de la cola",
-            sendFarewellWaitingTicket: "Enviar mensaje de despedida en el Aguardando",
-            acceptAudioMessageContact: "Aceita receber audio de todos contatos?",
+            sendFarewellWaitingTicket: "Enviar mensaje de despedida al poner en espera",
+            acceptAudioMessageContact: "¿Acepta recibir audio de todos los contactos?",
             enableLGPD: "Habilitar tratamiento LGPD",
             requiredTag: "Tag obligatoria para cerrar ticket",
             closeTicketOnTransfer: "Cerrar ticket al transferir para otra cola",

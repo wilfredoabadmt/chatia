@@ -585,7 +585,7 @@ const UserModal = ({ open, onClose, userId }) => {
 										<Field
 											as={TextField}
 											label={i18n.t("userModal.form.farewellMessage")}
-											type="farewellMessage"
+											type="text"
 											multiline
 											minRows={4}
 											fullWidth
@@ -613,7 +613,6 @@ const UserModal = ({ open, onClose, userId }) => {
 															as={Select}
 															label={i18n.t("userModal.form.defaultTheme")}
 															name="defaultTheme"
-															type="defaultTheme"
 															required
 														>
 															<MenuItem value="light">{i18n.t("userModal.form.defaultThemeLight")}</MenuItem>
@@ -639,7 +638,6 @@ const UserModal = ({ open, onClose, userId }) => {
 															as={Select}
 															label={i18n.t("userModal.form.defaultMenu")}
 															name="defaultMenu"
-															type="defaultMenu"
 															required
 														>
 															<MenuItem value={"open"}>{i18n.t("userModal.form.defaultMenuOpen")}</MenuItem>

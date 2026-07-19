@@ -48,10 +48,10 @@ const FlowImportModal = ({ open, onClose }) => {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Importar fluxo</DialogTitle>
+      <DialogTitle>Importar flujo</DialogTitle>
       <DialogContent dividers>
         <Stack spacing={2}>
-          <Typography>Selecione um arquivo .zip exportado pelo Flowbuilder.</Typography>
+          <Typography>Seleccione un archivo .zip exportado por Flowbuilder.</Typography>
           <Stack direction="row" alignItems="center" spacing={2}>
             {/* SOLUÇÃO: Usando a variável CSS global --primaryColor */}
             <Button
@@ -65,10 +65,10 @@ const FlowImportModal = ({ open, onClose }) => {
                 },
               }}
             >
-              Escolher arquivo
+              Seleccionar archivo
             </Button>
             <Typography variant="body2" color="textSecondary">
-              {file ? file.name : "Nenhum arquivo escolhido"}
+              {file ? file.name : "Ningún archivo seleccionado"}
             </Typography>
             <input
               ref={inputFileRef}
