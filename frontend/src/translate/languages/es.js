@@ -2405,7 +2405,9 @@ const messages = {
             requiredTag: "Tag obligatoria para cerrar ticket",
             closeTicketOnTransfer: "Cerrar ticket al transferir para otra cola",
             DirectTicketsToWallets: "Mover automáticamente cliente para cartera",
-            showNotificationPending: "Mostrar notificación para tickets pendientes"
+            showNotificationPending: "Mostrar notificación para tickets pendientes",
+            autoTranslate: "Traducción Automática de Mensajes",
+            translateApiKey: "API Key OpenAI (para traducción)"
           },
           customMessages: {
             sendQueuePositionMessage: "Mensaje de posición en la cola",
