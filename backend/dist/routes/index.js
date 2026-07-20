@@ -52,6 +52,7 @@ const flowBuilderRoutes_1 = __importDefault(require("./flowBuilderRoutes"));
 const flowCampaignRoutes_1 = __importDefault(require("./flowCampaignRoutes"));
 const debugRoutes_1 = __importDefault(require("./debugRoutes"));
 const translateRoutes_1 = __importDefault(require("./translateRoutes"));
+const messageTemplateRoutes_1 = __importDefault(require("./messageTemplateRoutes"));
 const routes = (0, express_1.Router)();
 routes.use(userRoutes_1.default);
 routes.use("/auth", authRoutes_1.default);
@@ -100,6 +101,7 @@ routes.use(statisticsRoutes_1.default);
 routes.use(companySettingsRoutes_1.default);
 routes.use(ScheduledMessagesRoutes_1.default);
 routes.use(translateRoutes_1.default);
+routes.use(messageTemplateRoutes_1.default);
 // 🔍 DEBUG ROUTES - REMOVER EM PRODUÇÃO
 if (process.env.NODE_ENV !== "production") {
     routes.use(debugRoutes_1.default);

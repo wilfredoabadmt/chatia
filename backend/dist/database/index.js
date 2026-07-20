@@ -60,6 +60,7 @@ const Webhook_1 = require("../models/Webhook");
 const ContactIdentity_1 = __importDefault(require("../models/ContactIdentity"));
 const ContactProduct_1 = __importDefault(require("../models/ContactProduct"));
 const PendingIdentityResolution_1 = __importDefault(require("../models/PendingIdentityResolution"));
+const MessageTemplate_1 = __importDefault(require("../models/MessageTemplate"));
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
 const sequelize = new sequelize_typescript_1.Sequelize(dbConfig);
@@ -119,7 +120,8 @@ const models = [
     Webhook_1.WebhookModel,
     ContactIdentity_1.default,
     PendingIdentityResolution_1.default,
-    ContactProduct_1.default
+    ContactProduct_1.default,
+    MessageTemplate_1.default
 ];
 sequelize.addModels(models);
 exports.default = sequelize;
