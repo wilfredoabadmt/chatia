@@ -127,8 +127,12 @@ services:
         - REACT_APP_HOURS_CLOSE_TICKETS_AUTO=9999
         - REACT_APP_PRIMARY_COLOR=${PRIMARY_COLOR:-#6B46C1}
         - REACT_APP_PRIMARY_DARK=${PRIMARY_DARK:-#4C1D95}
-        - REACT_APP_FACEBOOK_APP_ID=
+        - REACT_APP_FACEBOOK_APP_ID=${FACEBOOK_APP_ID:-}
         - REACT_APP_REQUIRE_BUSINESS_MANAGEMENT=FALSE
+        # Meta WhatsApp Embedded Signup
+        - REACT_APP_META_APP_ID=${META_APP_ID:-1285468513548408}
+        - REACT_APP_META_CONFIG_ID=${META_CONFIG_ID:-1662916478324880}
+        - REACT_APP_META_GRAPH_VERSION=v24.0
     restart: unless-stopped
     environment:
       # Domínio gerado/roteado pelo Coolify (nginx interno na porta 80)
