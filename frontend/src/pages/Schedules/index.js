@@ -139,22 +139,22 @@ const Schedules = () => {
   moment.locale(momentLang);
 
   const calendarMessages = useMemo(() => ({
-    date: i18n.t("schedules.calendar.messages.date") || i18n.t("scheduleModal.calendar.messages.date"),
-    time: i18n.t("schedules.calendar.messages.time") || i18n.t("scheduleModal.calendar.messages.time"),
-    event: i18n.t("schedules.calendar.messages.event") || i18n.t("scheduleModal.calendar.messages.event"),
-    allDay: i18n.t("schedules.calendar.messages.allDay") || i18n.t("scheduleModal.calendar.messages.allDay"),
-    week: i18n.t("schedules.calendar.messages.week") || i18n.t("scheduleModal.calendar.messages.week"),
-    work_week: i18n.t("schedules.calendar.messages.work_week") || i18n.t("scheduleModal.calendar.messages.work_week"),
-    day: i18n.t("schedules.calendar.messages.day") || i18n.t("scheduleModal.calendar.messages.day"),
-    month: i18n.t("schedules.calendar.messages.month") || i18n.t("scheduleModal.calendar.messages.month"),
-    previous: i18n.t("schedules.calendar.messages.previous") || i18n.t("scheduleModal.calendar.messages.previous"),
-    next: i18n.t("schedules.calendar.messages.next") || i18n.t("scheduleModal.calendar.messages.next"),
-    yesterday: i18n.t("schedules.calendar.messages.yesterday") || i18n.t("scheduleModal.calendar.messages.yesterday"),
-    tomorrow: i18n.t("schedules.calendar.messages.tomorrow") || i18n.t("scheduleModal.calendar.messages.tomorrow"),
-    today: i18n.t("schedules.calendar.messages.today") || i18n.t("scheduleModal.calendar.messages.today"),
-    agenda: i18n.t("schedules.calendar.messages.agenda") || i18n.t("scheduleModal.calendar.messages.agenda"),
-    noEventsInRange: i18n.t("schedules.calendar.messages.noEventsInRange") || i18n.t("scheduleModal.calendar.messages.noEventsInRange"),
-    showMore: (total) => "+" + total + " " + (i18n.t("schedules.calendar.messages.showMore") || i18n.t("scheduleModal.calendar.messages.showMore")),
+    date: i18n.t("scheduleModal.calendar.messages.date"),
+    time: i18n.t("scheduleModal.calendar.messages.time"),
+    event: i18n.t("scheduleModal.calendar.messages.event"),
+    allDay: i18n.t("scheduleModal.calendar.messages.allDay"),
+    week: i18n.t("scheduleModal.calendar.messages.week"),
+    work_week: i18n.t("scheduleModal.calendar.messages.work_week"),
+    day: i18n.t("scheduleModal.calendar.messages.day"),
+    month: i18n.t("scheduleModal.calendar.messages.month"),
+    previous: i18n.t("scheduleModal.calendar.messages.previous"),
+    next: i18n.t("scheduleModal.calendar.messages.next"),
+    yesterday: i18n.t("scheduleModal.calendar.messages.yesterday"),
+    tomorrow: i18n.t("scheduleModal.calendar.messages.tomorrow"),
+    today: i18n.t("scheduleModal.calendar.messages.today"),
+    agenda: i18n.t("scheduleModal.calendar.messages.agenda"),
+    noEventsInRange: i18n.t("scheduleModal.calendar.messages.noEventsInRange"),
+    showMore: (total) => "+" + total + " " + i18n.t("scheduleModal.calendar.messages.showMore"),
   }), [i18n.language]);
 
 
