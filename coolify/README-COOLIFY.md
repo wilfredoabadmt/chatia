@@ -88,7 +88,7 @@ El SSL se emite automáticamente al primer deploy.
 | `ADMIN_EMAIL` | `admin@tuempresa.com` | Login del panel |
 | `ADMIN_PASSWORD` | `********` | Márcala como secreta 🔒 |
 | `COMPANY_NAME` | `Mi Empresa` | Opcional (default: ChatIA) |
-| `CONTACT_PHONE` | `5511999999999` | Opcional |
+| `CONTACT_PHONE` | `+59171523780` | Opcional |
 | `PRIMARY_COLOR` | `#6B46C1` | Opcional |
 | `PRIMARY_DARK` | `#4C1D95` | Opcional |
 
