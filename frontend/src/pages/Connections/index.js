@@ -49,6 +49,7 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 import api from "../../services/api";
 import WhatsAppModal from "../../components/WhatsAppModal";
 import WabaConnectModal from "../../components/WabaConnectModal";
+import WhatsAppEmbeddedSignupModal from "../../components/WhatsAppEmbeddedSignupModal";
 import { FACEBOOK_APP_ID, REQUIRE_BUSINESS_MANAGEMENT, NUMBER_SUPPORT } from "../../config/env";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import QrcodeModal from "../../components/QrcodeModal";
@@ -159,6 +160,7 @@ const Connections = () => {
   const { whatsApps, loading } = useContext(WhatsAppsContext);
   const [whatsAppModalOpen, setWhatsAppModalOpen] = useState(false);
   const [wabaConnectModalOpen, setWabaConnectModalOpen] = useState(false);
+  const [embeddedSignupModalOpen, setEmbeddedSignupModalOpen] = useState(false);
   const [statusImport, setStatusImport] = useState([]);
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
@@ -553,6 +555,10 @@ const Connections = () => {
         open={wabaConnectModalOpen}
         onClose={() => setWabaConnectModalOpen(false)}
       />
+      <WhatsAppEmbeddedSignupModal
+        open={embeddedSignupModalOpen}
+        onClose={() => setEmbeddedSignupModalOpen(false)}
+      />
       {user.profile === "user" && user.allowConnections === "disabled" ?
         <ForbiddenPage />
         :
@@ -660,10 +666,10 @@ const Connections = () => {
                                 </MenuItem>
                               )}
                             />
-                            {/* WHATSAPP BUSINESS API (WABA) */}
+                            {/* WHATSAPP BUSINESS API (WABA) - Embedded Signup */}
                             <MenuItem
                               onClick={() => {
-                                setWabaConnectModalOpen(true);
+                                setEmbeddedSignupModalOpen(true);
                                 popupState.close();
                               }}
                             >
