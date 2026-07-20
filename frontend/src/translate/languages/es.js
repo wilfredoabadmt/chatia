@@ -480,7 +480,8 @@ const messages = {
       channels: {
         whatsapp: "WhatsApp",
         facebook: "Facebook",
-        instagram: "Instagram"
+        instagram: "Instagram",
+        waba: "WhatsApp Business API"
       },
       connections: {
         title: "Conexiones",
@@ -3181,6 +3182,62 @@ const messages = {
       validationResponsive: {
         ratingRequired: "Calificación requerida"
       }
+    },
+    wabaConnectModal: {
+      title: "Conectar WhatsApp Business API",
+      name: "Nombre de la conexión",
+      wabaId: "WhatsApp Business Account ID",
+      wabaIdHint: "ID de tu cuenta de WhatsApp Business (WABA)",
+      phoneNumberId: "Phone Number ID",
+      phoneNumberIdHint: "ID del número de teléfono en Meta",
+      accessToken: "Access Token",
+      number: "Número de teléfono",
+      connect: "Conectar",
+      cancel: "Cancelar",
+      success: "Conexión WABA creada correctamente",
+      infoText: "Conecta tu cuenta de WhatsApp Business API usando las credenciales de tu proveedor.",
+      infoLink: "Portal de activación TOI"
+    },
+    messageTemplates: {
+      title: "Plantillas de Mensajes",
+      subtitle: "Gestiona las plantillas de mensajes de WhatsApp Business API",
+      new: "Nueva Plantilla",
+      sync: "Sincronizar con Meta",
+      name: "Nombre",
+      language: "Idioma",
+      category: "Categoría",
+      status: "Estado",
+      components: "Componentes",
+      edit: "Editar",
+      delete: "Eliminar",
+      deleteConfirm: "¿Estás seguro de eliminar esta plantilla?",
+      noTemplates: "No hay plantillas configuradas",
+      deleteSuccess: "Plantilla eliminada correctamente",
+      searchPlaceholder: "Buscar plantillas...",
+      actions: "Acciones",
+      syncTitle: "Sincronizar con Meta",
+      syncSuccess: "Plantillas sincronizadas correctamente",
+      syncError: "Error al sincronizar plantillas",
+      syncSuccess: "Plantillas sincronizadas correctamente",
+      syncError: "Error al sincronizar plantillas",
+      categories: {
+        marketing: "Marketing",
+        utility: "Utilidad",
+        authentication: "Autenticación"
+      },
+      statuses: {
+        approved: "Aprobada",
+        pending: "Pendiente",
+        rejected: "Rechazada",
+        disabled: "Deshabilitada"
+      },
+      sendTemplate: "Enviar Plantilla",
+      selectTemplate: "Seleccionar plantilla",
+      parameters: "Parámetros",
+      bodyParams: "Parámetros del cuerpo",
+      headerParams: "Parámetros del encabezado",
+      send: "Enviar",
+      templateSent: "Plantilla enviada correctamente"
     }
   }
 };

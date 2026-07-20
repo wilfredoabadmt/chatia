@@ -745,6 +745,7 @@ const MainListItems = ({ collapsed, drawerClose }) => {
     // Principais
     tickets: tLang("mainDrawer.listItems.tickets", "Atendimentos", "Services"),
     quick: tLang("mainDrawer.listItems.quickMessages", "Respostas rápidas", "Quick Responses"),
+    messageTemplates: tLang("mainDrawer.listItems.messageTemplates", "Plantillas", "Templates"),
     kanban: tLang("mainDrawer.listItems.kanban", "Kanban", "Kanban"),
     contacts: tLang("mainDrawer.listItems.contacts", "Contatos", "Contacts"),
     schedules: tLang("mainDrawer.listItems.schedules", "Agendamentos", "Schedules"),
@@ -853,6 +854,14 @@ const MainListItems = ({ collapsed, drawerClose }) => {
         primary={L.quick}
         icon={<QuickReplyIcon />}
         iconKey="messages"
+        collapsed={collapsed}
+      />
+
+      <ListItemLink
+        to="/message-templates"
+        primary={L.messageTemplates}
+        icon={<QuickReplyIcon />}
+        iconKey="messageTemplates"
         collapsed={collapsed}
       />
 

@@ -49,6 +49,7 @@ import flowBuilder from "./flowBuilderRoutes";
 import flowCampaignRoutes from "./flowCampaignRoutes";
 import debugRoutes from "./debugRoutes";
 import translateRoutes from "./translateRoutes";
+import messageTemplateRoutes from "./messageTemplateRoutes";
 
 
 const routes = Router();
@@ -104,6 +105,7 @@ routes.use(companySettingsRoutes);
 routes.use(scheduleMessageRoutes);
 
 routes.use(translateRoutes);
+routes.use(messageTemplateRoutes);
 
 // 🔍 DEBUG ROUTES - REMOVER EM PRODUÇÃO
 if (process.env.NODE_ENV !== "production") {

@@ -416,7 +416,8 @@ const messages = {
       channels: {
         whatsapp: "WhatsApp",
         facebook: "Facebook",
-        instagram: "Instagram"
+        instagram: "Instagram",
+        waba: "WhatsApp Business API"
       },
       connections: {
         title: "Conexões",
@@ -3194,6 +3195,62 @@ const messages = {
         ratingRequired: "Avaliação obrigatória"
       }
     },
+    wabaConnectModal: {
+      title: "Conectar WhatsApp Business API",
+      name: "Nome da conexão",
+      wabaId: "WhatsApp Business Account ID",
+      wabaIdHint: "ID da sua conta WhatsApp Business (WABA)",
+      phoneNumberId: "Phone Number ID",
+      phoneNumberIdHint: "ID do número de telefone no Meta",
+      accessToken: "Access Token",
+      number: "Número de telefone",
+      connect: "Conectar",
+      cancel: "Cancelar",
+      success: "Conexão WABA criada com sucesso",
+      infoText: "Conecte sua conta WhatsApp Business API usando as credenciais do seu provedor.",
+      infoLink: "Portal de ativação TOI"
+    },
+    messageTemplates: {
+      title: "Templates de Mensagens",
+      subtitle: "Gerencie os templates de mensagens do WhatsApp Business API",
+      new: "Novo Template",
+      sync: "Sincronizar com Meta",
+      name: "Nome",
+      language: "Idioma",
+      category: "Categoria",
+      status: "Status",
+      components: "Componentes",
+      edit: "Editar",
+      delete: "Excluir",
+      deleteConfirm: "Tem certeza que deseja excluir este template?",
+      noTemplates: "Nenhum template configurado",
+      deleteSuccess: "Template excluído com sucesso",
+      searchPlaceholder: "Buscar templates...",
+      actions: "Ações",
+      syncTitle: "Sincronizar com Meta",
+      syncSuccess: "Templates sincronizados com sucesso",
+      syncError: "Erro ao sincronizar templates",
+      syncSuccess: "Templates sincronizados com sucesso",
+      syncError: "Erro ao sincronizar templates",
+      categories: {
+        marketing: "Marketing",
+        utility: "Utilidade",
+        authentication: "Autenticação"
+      },
+      statuses: {
+        approved: "Aprovado",
+        pending: "Pendente",
+        rejected: "Rejeitado",
+        disabled: "Desabilitado"
+      },
+      sendTemplate: "Enviar Template",
+      selectTemplate: "Selecionar template",
+      parameters: "Parâmetros",
+      bodyParams: "Parâmetros do corpo",
+      headerParams: "Parâmetros do cabeçalho",
+      send: "Enviar",
+      templateSent: "Template enviado com sucesso"
+    }
   },
 };
 

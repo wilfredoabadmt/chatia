@@ -759,7 +759,7 @@ const TicketListItemCustom = ({ setTabOpen, ticket }) => {
                                     <br />
                                 )}
                                 <span className={classes.secondaryContentSecond} >
-                                    {ticket?.whatsapp ? <Badge className={classes.connectionTag} style={{ backgroundColor: ticket.channel === "whatsapp" ? "#25D366" : ticket.channel === "facebook" ? "#4267B2" : "#E1306C" }}>{ticket.whatsapp?.name.toUpperCase()}</Badge> : <br></br>}
+                                    {ticket?.whatsapp ? <Badge className={classes.connectionTag} style={{ backgroundColor: ticket.channel === "whatsapp" ? "#25D366" : ticket.channel === "facebook" ? "#4267B2" : ticket.channel === "waba" ? "#00a884" : "#E1306C" }}>{ticket.whatsapp?.name.toUpperCase()}</Badge> : <br></br>}
                                     {<Badge style={{ backgroundColor: ticket.queue?.color || "#7c7c7c" }} className={classes.connectionTag}>{ticket.queueId ? ticket.queue?.name.toUpperCase() : ticket.status === "lgpd" ? "LGPD" : i18n.t("ticketsResponsive.status.noQueue")}</Badge>}
                                     {ticket?.user && (<Badge style={{ backgroundColor: "#000000" }} className={classes.connectionTag}>{ticket.user?.name.toUpperCase()}</Badge>)}
                                 </span>

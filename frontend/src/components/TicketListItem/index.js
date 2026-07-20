@@ -227,6 +227,10 @@ const getAvatarChannel = (channel) => {
         return whatsappIcon;
     }
 
+    if (channel === "waba") {
+        return whatsappIcon;
+    }
+
     if (channel === "instagram") {
         return insatagramIcon;
     }

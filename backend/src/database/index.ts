@@ -55,6 +55,7 @@ import { WebhookModel } from "../models/Webhook";
 import ContactIdentity from "../models/ContactIdentity";
 import ContactProduct from "../models/ContactProduct";
 import PendingIdentityResolution from "../models/PendingIdentityResolution";
+import MessageTemplate from "../models/MessageTemplate";
 
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
@@ -117,7 +118,8 @@ const models = [
   WebhookModel,
   ContactIdentity,
   PendingIdentityResolution,
-  ContactProduct
+  ContactProduct,
+  MessageTemplate
 ];
 
 sequelize.addModels(models);

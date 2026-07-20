@@ -64,6 +64,7 @@ import { ForwardMessageContext } from "../../context/ForwarMessage/ForwardMessag
 import MessageUploadMedias from "../MessageUploadMedias";
 import { EditMessageContext } from "../../context/EditingMessage/EditingMessageContext";
 import ScheduleModal from "../ScheduleModal";
+import MessageTemplateSelector from "../MessageTemplateSelector";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 
@@ -393,6 +394,7 @@ const MessageInput = ({ ticketId, ticketStatus, droppedFiles, contactId, ticketC
   const [mediasUpload, setMediasUpload] = useState([]);
   const isMounted = useRef(true);
   const [buttonModalOpen, setButtonModalOpen] = useState(false);
+  const [templateModalOpen, setTemplateModalOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -755,6 +757,24 @@ const MessageInput = ({ ticketId, ticketStatus, droppedFiles, contactId, ticketC
     setEditingMessage(null);
     setPrivateMessageInputVisible(false)
     handleMenuItemClick();
+  };
+
+  const handleSendTemplate = async ({ templateId, templateName, language, headerParams, bodyParams }) => {
+    setLoading(true);
+    try {
+      await api.post(`/messages/${ticketId}`, {
+        templateId,
+        templateName,
+        language,
+        headerParams,
+        bodyParams,
+        fromMe: true,
+        isPrivate: "false",
+      });
+    } catch (err) {
+      toastError(err);
+    }
+    setLoading(false);
   };
 
   const handleStartRecording = async () => {
@@ -1379,6 +1399,18 @@ const MessageInput = ({ ticketId, ticketStatus, droppedFiles, contactId, ticketC
     <BoltIcon className={classes.sendMessageIcons} />
   </IconButton>
 </Tooltip>
+{ticketChannel === "waba" && (
+  <Tooltip title={i18n.t("messageTemplates.sendTemplate")}>
+    <IconButton
+      aria-label="sendTemplate"
+      component="span"
+      onClick={() => setTemplateModalOpen(true)}
+      disabled={loading}
+    >
+      <Description className={classes.sendMessageIcons} />
+    </IconButton>
+  </Tooltip>
+)}
                 <Tooltip title={i18n.t("tickets.buttons.scredule")}>
                   <IconButton
                     aria-label="scheduleMessage"
@@ -1461,6 +1493,14 @@ const MessageInput = ({ ticketId, ticketStatus, droppedFiles, contactId, ticketC
                 onClose={() => setAppointmentModalOpen(false)}
                 message={inputMessage}
                 contactId={contactId}
+              />
+            )}
+            {templateModalOpen && (
+              <MessageTemplateSelector
+                open={templateModalOpen}
+                onClose={() => setTemplateModalOpen(false)}
+                onSend={handleSendTemplate}
+                ticketChannel={ticketChannel}
               />
             )}
           </div>

@@ -365,6 +365,8 @@ const WhatsAppModalCompany = ({
         return <Instagram />;
       case "whatsapp":
         return <WhatsApp />;
+      case "waba":
+        return <WhatsApp />;
       default:
         return "error";
     }

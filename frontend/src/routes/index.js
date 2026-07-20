@@ -47,6 +47,7 @@ const Kanban = lazy(() => import("../pages/Kanban"));
 const TagsKanban = lazy(() => import("../pages/TagsKanban"));
 const ForgotPassword = lazy(() => import("../pages/ForgetPassWord"));
 const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+const MessageTemplates = lazy(() => import("../pages/MessageTemplates"));
 
 const PageLoadingFallback = () => (
   <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", backgroundColor: "transparent" }}>
@@ -123,6 +124,7 @@ const Routes = () => {
                   <Route exact path="/kanban" component={Kanban} isPrivate />
                   <Route exact path="/tagsKanban" component={TagsKanban} isPrivate />
                   <Route exact path="/prompts" component={Prompts} isPrivate />
+                  <Route exact path="/message-templates" component={MessageTemplates} isPrivate />
                   <Route exact path="/allConnections" component={AllConnections} isPrivate />
                   {showCampaigns && (
                     <>

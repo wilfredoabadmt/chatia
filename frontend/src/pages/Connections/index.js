@@ -48,6 +48,7 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 
 import api from "../../services/api";
 import WhatsAppModal from "../../components/WhatsAppModal";
+import WabaConnectModal from "../../components/WabaConnectModal";
 import { FACEBOOK_APP_ID, REQUIRE_BUSINESS_MANAGEMENT, NUMBER_SUPPORT } from "../../config/env";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import QrcodeModal from "../../components/QrcodeModal";
@@ -145,6 +146,8 @@ const IconChannel = (channel) => {
       return <Instagram style={{ color: "#e1306c" }} />;
     case "whatsapp":
       return <WhatsApp style={{ color: "#25d366" }} />;
+    case "waba":
+      return <WhatsApp style={{ color: "#00a884" }} />;
     default:
       return i18n.t("connections.iconChannel.error");
   }
@@ -155,6 +158,7 @@ const Connections = () => {
 
   const { whatsApps, loading } = useContext(WhatsAppsContext);
   const [whatsAppModalOpen, setWhatsAppModalOpen] = useState(false);
+  const [wabaConnectModalOpen, setWabaConnectModalOpen] = useState(false);
   const [statusImport, setStatusImport] = useState([]);
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
@@ -545,6 +549,10 @@ const Connections = () => {
         onClose={handleCloseWhatsAppModal}
         whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
       />
+      <WabaConnectModal
+        open={wabaConnectModalOpen}
+        onClose={() => setWabaConnectModalOpen(false)}
+      />
       {user.profile === "user" && user.allowConnections === "disabled" ?
         <ForbiddenPage />
         :
@@ -652,6 +660,22 @@ const Connections = () => {
                                 </MenuItem>
                               )}
                             />
+                            {/* WHATSAPP BUSINESS API (WABA) */}
+                            <MenuItem
+                              onClick={() => {
+                                setWabaConnectModalOpen(true);
+                                popupState.close();
+                              }}
+                            >
+                              <WhatsApp
+                                fontSize="small"
+                                style={{
+                                  marginRight: "10px",
+                                  color: "#00a884",
+                                }}
+                              />
+                              {i18n.t("channels.waba")}
+                            </MenuItem>
                           </Menu>
                         </>
                       )}

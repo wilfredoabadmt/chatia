@@ -477,7 +477,8 @@ const messages = {
       channels: {
         whatsapp: "WhatsApp",
         facebook: "Facebook",
-        instagram: "Instagram"
+        instagram: "Instagram",
+        waba: "WhatsApp Business API"
       },
       connections: {
         title: "Connections",
@@ -3244,6 +3245,62 @@ const messages = {
       validationResponsive: {
         ratingRequired: "Rating required"
       }
+    },
+    wabaConnectModal: {
+      title: "Connect WhatsApp Business API",
+      name: "Connection name",
+      wabaId: "WhatsApp Business Account ID",
+      wabaIdHint: "Your WhatsApp Business Account (WABA) ID",
+      phoneNumberId: "Phone Number ID",
+      phoneNumberIdHint: "Phone number ID in Meta",
+      accessToken: "Access Token",
+      number: "Phone number",
+      connect: "Connect",
+      cancel: "Cancel",
+      success: "WABA connection created successfully",
+      infoText: "Connect your WhatsApp Business API account using your provider credentials.",
+      infoLink: "TOI activation portal"
+    },
+    messageTemplates: {
+      title: "Message Templates",
+      subtitle: "Manage WhatsApp Business API message templates",
+      new: "New Template",
+      sync: "Sync with Meta",
+      name: "Name",
+      language: "Language",
+      category: "Category",
+      status: "Status",
+      components: "Components",
+      edit: "Edit",
+      delete: "Delete",
+      deleteConfirm: "Are you sure you want to delete this template?",
+      noTemplates: "No templates configured",
+      deleteSuccess: "Template deleted successfully",
+      searchPlaceholder: "Search templates...",
+      actions: "Actions",
+      syncTitle: "Sync with Meta",
+      syncSuccess: "Templates synced successfully",
+      syncError: "Error syncing templates",
+      syncSuccess: "Templates synced successfully",
+      syncError: "Error syncing templates",
+      categories: {
+        marketing: "Marketing",
+        utility: "Utility",
+        authentication: "Authentication"
+      },
+      statuses: {
+        approved: "Approved",
+        pending: "Pending",
+        rejected: "Rejected",
+        disabled: "Disabled"
+      },
+      sendTemplate: "Send Template",
+      selectTemplate: "Select template",
+      parameters: "Parameters",
+      bodyParams: "Body parameters",
+      headerParams: "Header parameters",
+      send: "Send",
+      templateSent: "Template sent successfully"
     }
   }
 };
