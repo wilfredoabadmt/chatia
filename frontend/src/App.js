@@ -18,9 +18,27 @@ const defaultLogoFavicon = "/favicon.png";
 
 const queryClient = new QueryClient();
 
+const isValidColor = (color) => {
+  if (!color || typeof color !== "string") return false;
+  const trimmed = color.trim();
+  if (trimmed.startsWith("<") || trimmed.includes("html") || trimmed === "undefined" || trimmed === "null") return false;
+  return trimmed.startsWith("#") || trimmed.startsWith("rgb") || trimmed.startsWith("hsl");
+};
+
+const getFaviconUrl = (favicon, defaultFav) => {
+  if (!favicon || favicon === "null" || favicon === "undefined") return defaultFav;
+  if (favicon.startsWith("<") || favicon.includes("html")) return defaultFav;
+  if (favicon.startsWith("http://") || favicon.startsWith("https://")) return favicon;
+  if (favicon.startsWith("/public/")) return favicon;
+  if (favicon.startsWith("/")) return favicon;
+  const backend = getBackendUrl();
+  return (backend ? backend : "") + "/public/" + favicon;
+};
+
 const App = () => {
   const [locale, setLocale] = useState();
-  const appColorLocalStorage = localStorage.getItem("primaryColorLight") || localStorage.getItem("primaryColorDark") || "#065183";
+  const rawColorLocal = localStorage.getItem("primaryColorLight") || localStorage.getItem("primaryColorDark");
+  const appColorLocalStorage = isValidColor(rawColorLocal) ? rawColorLocal : "#6B46C1";
   const appNameLocalStorage = localStorage.getItem("appName") || "";
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const preferredTheme = window.localStorage.getItem("preferredTheme");
@@ -236,11 +254,18 @@ const App = () => {
             value = defaultValue;
           }
 
+          // Validar cores se for primaryColorLight/Dark
+          if ((key === 'primaryColorLight' || key === 'primaryColorDark') && !isValidColor(value)) {
+            value = defaultValue;
+          }
+
           setter(value);
 
           // Salvar no cache
-          if (cache) {
-            localStorage.setItem(key, result.value || defaultValue);
+          if (cache && isValidColor(value)) {
+            localStorage.setItem(key, value);
+          } else if (cache && key === 'appName') {
+            localStorage.setItem(key, value);
           }
 
           // Atualizar document.title se for appName
@@ -251,7 +276,7 @@ const App = () => {
         } else {
           // Se falhou, usar valor padrão (se não tiver cache)
           const cachedValue = localStorage.getItem(key);
-          if (!cachedValue) {
+          if (!cachedValue || (key.includes('Color') && !isValidColor(cachedValue))) {
             let value = defaultValue;
             if (isFile && !value.startsWith('http') && !value.startsWith('/')) {
               // defaultValue já deve ser um caminho relativo válido
@@ -294,7 +319,7 @@ const App = () => {
 
   return (
     <>
-      <Favicon url={appLogoFavicon ? getBackendUrl() + "/public/" + appLogoFavicon : defaultLogoFavicon} />
+      <Favicon url={getFaviconUrl(appLogoFavicon, defaultLogoFavicon)} />
       <ColorModeContext.Provider value={{ colorMode }}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
