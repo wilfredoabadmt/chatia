@@ -8,8 +8,17 @@ type AppEnv = {
   REACT_APP_PRIMARY_COLOR: string;
   REACT_APP_PRIMARY_DARK: string;
 };
+const sanitizeBackendUrl = (url?: string): string => {
+  if (!url) return "";
+  const trimmed = url.trim();
+  if (trimmed.includes("yourdomain.com") || trimmed === "undefined" || trimmed === "null") {
+    return "";
+  }
+  return trimmed;
+};
+
 const env: AppEnv = {
-  REACT_APP_BACKEND_URL: (process.env.REACT_APP_BACKEND_URL as string) || "",
+  REACT_APP_BACKEND_URL: sanitizeBackendUrl(process.env.REACT_APP_BACKEND_URL as string),
   REACT_APP_FACEBOOK_APP_ID: (process.env.REACT_APP_FACEBOOK_APP_ID as string) || "",
   REACT_APP_REQUIRE_BUSINESS_MANAGEMENT: (((process.env.REACT_APP_REQUIRE_BUSINESS_MANAGEMENT as string) || "FALSE").toUpperCase() === "TRUE"),
   REACT_APP_NAME_SYSTEM: (process.env.REACT_APP_NAME_SYSTEM as string) || "ChatIA",

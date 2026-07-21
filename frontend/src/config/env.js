@@ -1,5 +1,14 @@
+const sanitizeBackendUrl = (url) => {
+  if (!url || typeof url !== "string") return "";
+  const trimmed = url.trim();
+  if (trimmed.includes("yourdomain.com") || trimmed === "undefined" || trimmed === "null") {
+    return "";
+  }
+  return trimmed;
+};
+
 const env = {
-  REACT_APP_BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "",
+  REACT_APP_BACKEND_URL: sanitizeBackendUrl(process.env.REACT_APP_BACKEND_URL),
   REACT_APP_FACEBOOK_APP_ID: process.env.REACT_APP_FACEBOOK_APP_ID || "",
   REACT_APP_REQUIRE_BUSINESS_MANAGEMENT: (process.env.REACT_APP_REQUIRE_BUSINESS_MANAGEMENT || "FALSE").toUpperCase() === "TRUE",
   REACT_APP_NAME_SYSTEM: process.env.REACT_APP_NAME_SYSTEM || "ChatIA",
@@ -17,3 +26,4 @@ export const NUMBER_SUPPORT = env.REACT_APP_NUMBER_SUPPORT;
 export const HOURS_CLOSE_TICKETS_AUTO = env.REACT_APP_HOURS_CLOSE_TICKETS_AUTO;
 export const PRIMARY_COLOR = env.REACT_APP_PRIMARY_COLOR;
 export const PRIMARY_DARK = env.REACT_APP_PRIMARY_DARK;
+
