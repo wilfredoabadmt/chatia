@@ -22,9 +22,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const isAuth_1 = __importDefault(require("../middleware/isAuth"));
 const WhatsAppCloudController = __importStar(require("../controllers/WhatsAppCloudController"));
+const WhatsAppEmbeddedSignupController = __importStar(require("../controllers/WhatsAppEmbeddedSignupController"));
 const whatsappCloudRoutes = (0, express_1.Router)();
+// Manual WABA connect (from TOI portal or manual entry)
 whatsappCloudRoutes.post("/webhooks/whatsapp-cloud/connect", WhatsAppCloudController.connect);
+// Embedded Signup: exchange authorization code for access token
+whatsappCloudRoutes.post("/whatsapp/exchange-token", isAuth_1.default, WhatsAppEmbeddedSignupController.exchangeToken);
 exports.default = whatsappCloudRoutes;

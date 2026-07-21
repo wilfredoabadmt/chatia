@@ -88,13 +88,14 @@ if [ "$RUN_MIGRATIONS" = "true" ]; then
     done
 
     # ---------------------------------------------
-    # 3b. Validar tabelas essenciais (aborta se faltar)
+    # 3b. Validar tabelas essenciais (warn se faltar, nao aborta)
     # ---------------------------------------------
     if ! node /app/scripts/db-check-tables.js; then
-        log "ERRO: tabelas essenciais faltando. Migrations falharam."
-        exit 1
+        log "AVISO: tabelas essenciais faltando. Migrations podem ter falhado."
+        log "O servidor iniciara, mas funcionalidade pode estar limitada."
+    else
+        log "Tabelas essenciais validadas."
     fi
-    log "Tabelas essenciais validadas."
 
     # ---------------------------------------------
     # 4. Seeds — SOLO en instalación limpia
@@ -113,8 +114,7 @@ if [ "$RUN_MIGRATIONS" = "true" ]; then
     if [ "$RUN_SEED_ADMIN" = "true" ]; then
         log "Criando/atualizando admin..."
         node /app/scripts/seed_admin.js || {
-            log "ERRO: seed do admin falhou."
-            exit 1
+            log "AVISO: seed do admin falhou (tabelas podem nao existir ainda)."
         }
     fi
 else

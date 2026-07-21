@@ -54,6 +54,9 @@ const debugRoutes_1 = __importDefault(require("./debugRoutes"));
 const translateRoutes_1 = __importDefault(require("./translateRoutes"));
 const messageTemplateRoutes_1 = __importDefault(require("./messageTemplateRoutes"));
 const routes = (0, express_1.Router)();
+routes.get("/health", (_req, res) => {
+    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
 routes.use(userRoutes_1.default);
 routes.use("/auth", authRoutes_1.default);
 routes.use("/api/messages", apiRoutes_1.default);

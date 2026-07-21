@@ -54,6 +54,10 @@ import messageTemplateRoutes from "./messageTemplateRoutes";
 
 const routes = Router();
 
+routes.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 routes.use(userRoutes);
 routes.use("/auth", authRoutes);
 routes.use("/api/messages", apiRoutes);
