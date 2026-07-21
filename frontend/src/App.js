@@ -215,6 +215,16 @@ const App = () => {
         if (cache) {
           const cachedValue = localStorage.getItem(key);
           if (cachedValue && cachedValue !== 'null' && cachedValue !== 'undefined') {
+            if ((key === 'primaryColorLight' || key === 'primaryColorDark') && !isValidColor(cachedValue)) {
+              localStorage.removeItem(key);
+              setter(defaultValue);
+              return;
+            }
+            if (typeof cachedValue === 'string' && (cachedValue.startsWith('<') || cachedValue.includes('html'))) {
+              localStorage.removeItem(key);
+              setter(defaultValue);
+              return;
+            }
             const value = isFile && !cachedValue.startsWith('http') && !cachedValue.startsWith('/')
               ? getBackendUrl() + "/public/" + cachedValue
               : cachedValue;
