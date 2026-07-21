@@ -24,13 +24,6 @@ const META_APP_ID = process.env.REACT_APP_META_APP_ID || "";
 const META_CONFIG_ID = process.env.REACT_APP_META_CONFIG_ID || "";
 const META_GRAPH_VERSION = process.env.REACT_APP_META_GRAPH_VERSION || "v24.0";
 
-declare global {
-  interface Window {
-    FB?: any;
-    fbAsyncInit?: () => void;
-  }
-}
-
 const useStyles = makeStyles((theme) => ({
   infoBox: {
     backgroundColor: "#e8f5e9",
