@@ -1,6 +1,24 @@
 const messages = {
   en: {
     translations: {
+      embeddedSignup: {
+        title: "Connect WhatsApp Business",
+        connecting: "Connecting your WhatsApp Business...",
+        connectingHint: "Follow the instructions in the Facebook popup",
+        cancel: "Cancel",
+        done: "Done",
+        success: "WhatsApp connected successfully!",
+        sdkNotLoaded: "Meta SDK not loaded. Please refresh and try again.",
+        error: "Error during WhatsApp connection",
+        cancelled: "WhatsApp connection cancelled.",
+        phoneNumber: "Phone number",
+        infoText: "You will be redirected to Facebook to authorize your WhatsApp Business account. Make sure you are logged into the Facebook account associated with your WhatsApp Business.",
+        notConfigured: "Embedded Signup is not configured. Please contact your administrator.",
+        connectButton: "Connect my WhatsApp Business",
+        loadingSdk: "Loading Facebook SDK...",
+        manualOption: "Prefer to enter credentials manually?",
+        manualLink: "Use the activation portal"
+      },
       signup: {
         title: "Sign Up",
         toasts: {

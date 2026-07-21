@@ -126,20 +126,18 @@ export function CompanyForm(props) {
 
   useEffect(() => {
     setRecord((prev) => {
-      if (moment(initialValue).isValid()) {
-        initialValue.dueDate = moment(initialValue.dueDate).format(
-          "YYYY-MM-DD"
-        );
+      const updated = { ...prev, ...initialValue };
+      if (initialValue?.dueDate && moment(initialValue.dueDate).isValid()) {
+        updated.dueDate = moment(initialValue.dueDate).format("YYYY-MM-DD");
+      } else {
+        updated.dueDate = "";
       }
-      return {
-        ...prev,
-        ...initialValue,
-      };
+      return updated;
     });
   }, [initialValue]);
 
   const handleSubmit = async (data) => {
-    if (data.dueDate === "" || moment(data.dueDate).isValid() === false) {
+    if (!data.dueDate || data.dueDate === "" || !moment(data.dueDate).isValid()) {
       data.dueDate = null;
     }
     // Normalizar document antes de enviar

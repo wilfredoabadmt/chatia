@@ -206,6 +206,18 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
     });
   }, [handleSuccess]);
 
+  const getTranslation = (key, fallback) => {
+    const text = i18n.t(key);
+    return (!text || text === key) ? fallback : text;
+  };
+
+  useEffect(() => {
+    if (open) {
+      setLoading(false);
+      setSuccess(false);
+    }
+  }, [open]);
+
   const handleClose = useCallback(() => {
     setSuccess(false);
     setConnectedNumber("");
@@ -219,7 +231,7 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
       <DialogTitle>
         <Box display="flex" alignItems="center" gap={1}>
           <WhatsApp style={{ color: "#25D366" }} />
-          {i18n.t("embeddedSignup.title") || "Connect WhatsApp Business"}
+          {getTranslation("embeddedSignup.title", "Conectar WhatsApp Business")}
         </Box>
       </DialogTitle>
       <DialogContent>
@@ -227,11 +239,11 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
           <Box className={classes.successBox}>
             <WhatsApp style={{ fontSize: 60, color: "#25D366" }} />
             <Typography variant="h6" style={{ color: "#25D366" }}>
-              {i18n.t("connected") || "Connected!"}
+              {getTranslation("connected", "¡Conectado!")}
             </Typography>
             {connectedNumber && (
               <Typography variant="body1">
-                {i18n.t("embeddedSignup.phoneNumber") || "Phone number"}:{" "}
+                {getTranslation("embeddedSignup.phoneNumber", "Número de teléfono")}:{" "}
                 <strong>{connectedNumber}</strong>
               </Typography>
             )}
@@ -245,28 +257,24 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
           <Box className={classes.loadingBox}>
             <CircularProgress size={48} style={{ color: "#25D366" }} />
             <Typography variant="body1">
-              {i18n.t("embeddedSignup.connecting") ||
-                "Connecting your WhatsApp Business..."}
+              {getTranslation("embeddedSignup.connecting", "Conectando tu WhatsApp Business...")}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {i18n.t("embeddedSignup.connectingHint") ||
-                "Follow the instructions in the Facebook popup"}
+              {getTranslation("embeddedSignup.connectingHint", "Sigue las instrucciones en la ventana emergente de Facebook")}
             </Typography>
           </Box>
         ) : (
           <>
             <Box className={classes.infoBox}>
               <Typography variant="body2">
-                {i18n.t("embeddedSignup.infoText") ||
-                  "You will be redirected to Facebook to authorize your WhatsApp Business account. Make sure you are logged into the Facebook account associated with your WhatsApp Business."}
+                {getTranslation("embeddedSignup.infoText", "Serás redirigido a Facebook para autorizar tu cuenta de WhatsApp Business. Asegúrate de iniciar sesión con la cuenta de Facebook asociada a tu WhatsApp Business.")}
               </Typography>
             </Box>
 
             {!META_APP_ID || !META_CONFIG_ID ? (
               <Box textAlign="center" p={3}>
                 <Typography variant="body2" color="error">
-                  {i18n.t("embeddedSignup.notConfigured") ||
-                    "Embedded Signup is not configured. Please contact your administrator."}
+                  {getTranslation("embeddedSignup.notConfigured", "El registro integrado de WhatsApp no está configurado. Por favor contacta al administrador.")}
                 </Typography>
               </Box>
             ) : (
@@ -278,8 +286,7 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
                   disabled={!sdkReady || loading}
                   startIcon={<WhatsApp />}
                 >
-                  {i18n.t("embeddedSignup.connectButton") ||
-                    "Connect my WhatsApp Business"}
+                  {getTranslation("embeddedSignup.connectButton", "Conectar mi WhatsApp Business")}
                 </Button>
                 {!sdkReady && (
                   <Typography
@@ -287,8 +294,7 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
                     color="textSecondary"
                     style={{ display: "block", marginTop: 8 }}
                   >
-                    {i18n.t("embeddedSignup.loadingSdk") ||
-                      "Loading Facebook SDK..."}
+                    {getTranslation("embeddedSignup.loadingSdk", "Cargando SDK de Facebook...")}
                   </Typography>
                 )}
               </Box>
@@ -296,16 +302,14 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
 
             <Box mt={2} textAlign="center">
               <Typography variant="caption" color="textSecondary">
-                {i18n.t("embeddedSignup.manualOption") ||
-                  "Prefer to enter credentials manually?"}{" "}
+                {getTranslation("embeddedSignup.manualOption", "¿Prefieres ingresar credenciales manualmente?")}{" "}
                 <Link
                   href="https://toi.bo/embedded-whatsapp/"
                   target="_blank"
                   rel="noopener"
                   className={classes.link}
                 >
-                  {i18n.t("embeddedSignup.manualLink") ||
-                    "Use the activation portal"}
+                  {getTranslation("embeddedSignup.manualLink", "Usar el portal de activación")}
                 </Link>
               </Typography>
             </Box>
@@ -315,8 +319,8 @@ const WhatsAppEmbeddedSignupModal = ({ open, onClose }) => {
       <DialogActions>
         <Button onClick={handleClose} color="secondary">
           {success
-            ? i18n.t("embeddedSignup.done") || "Done"
-            : i18n.t("embeddedSignup.cancel") || "Cancel"}
+            ? getTranslation("embeddedSignup.done", "Listo")
+            : getTranslation("embeddedSignup.cancel", "Cancelar")}
         </Button>
       </DialogActions>
     </Dialog>

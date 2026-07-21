@@ -1,6 +1,24 @@
 const messages = {
   es: {
     translations: {
+      embeddedSignup: {
+        title: "Conectar WhatsApp Business",
+        connecting: "Conectando tu WhatsApp Business...",
+        connectingHint: "Sigue las instrucciones en la ventana emergente de Facebook",
+        cancel: "Cancelar",
+        done: "Listo",
+        success: "¡WhatsApp conectado con éxito!",
+        sdkNotLoaded: "SDK de Meta no cargado. Por favor recarga e intenta de nuevo.",
+        error: "Error durante la conexión de WhatsApp",
+        cancelled: "Conexión de WhatsApp cancelada.",
+        phoneNumber: "Número de teléfono",
+        infoText: "Serás redirigido a Facebook para autorizar tu cuenta de WhatsApp Business. Asegúrate de iniciar sesión con la cuenta de Facebook asociada a tu WhatsApp Business.",
+        notConfigured: "El registro integrado de WhatsApp no está configurado. Por favor contacta al administrador.",
+        connectButton: "Conectar mi WhatsApp Business",
+        loadingSdk: "Cargando SDK de Facebook...",
+        manualOption: "¿Prefieres ingresar credenciales manualmente?",
+        manualLink: "Usar el portal de activación"
+      },
 
       signup: {
         title: "Registrarse",

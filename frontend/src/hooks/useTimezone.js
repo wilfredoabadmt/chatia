@@ -25,9 +25,10 @@ const useTimezone = () => {
   const getCompanyTimezone = useCallback(async (companyId = user.companyId) => {
     try {
       // First try to get company-specific timezone
-      const { data: companyData } = await api.get(`/companies/${companyId}`);
+      const url = companyId ? `/companies/${companyId}` : `/companies/current`;
+      const { data: companyData } = await api.get(url);
 
-      if (companyData.timezone) {
+      if (companyData && companyData.timezone) {
         return {
           timezone: companyData.timezone,
           source: "company",
@@ -43,8 +44,6 @@ const useTimezone = () => {
         isCustom: false
       };
     } catch (error) {
-      console.error("Error fetching company timezone:", error);
-      toast.error(i18n.t("settings.timezone.errors.fetchCompanyTimezone"));
       return {
         timezone: "America/Sao_Paulo",
         source: "fallback",
